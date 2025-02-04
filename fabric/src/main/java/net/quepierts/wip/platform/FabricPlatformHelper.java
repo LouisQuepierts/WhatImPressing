@@ -1,7 +1,7 @@
 package net.quepierts.wip.platform;
 
-import net.quepierts.wip.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
+import net.quepierts.wip.platform.services.IPlatformHelper;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 

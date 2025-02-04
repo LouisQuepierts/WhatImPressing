@@ -1,8 +1,8 @@
 package net.quepierts.wip.platform;
 
-import net.quepierts.wip.platform.services.IPlatformHelper;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.quepierts.wip.platform.services.IPlatformHelper;
 
 public class ForgePlatformHelper implements IPlatformHelper {
 

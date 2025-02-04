@@ -8,8 +8,6 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.quepierts.wip.gui.KeystrokesDisplayLayer;
-import net.quepierts.wip.gui.KeystrokesEditorScreen;
-import net.quepierts.wip.gui.widget.KeyListenerSection;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientHandler {
