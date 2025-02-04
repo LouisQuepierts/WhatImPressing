@@ -6,7 +6,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "KeyboardHandlerMixin"
+    "KeyboardHandlerMixin",
+    "MinecraftClientMixin",
+    "MouseHandlerMixin"
   ],
   "server": [],
   "injectors": {

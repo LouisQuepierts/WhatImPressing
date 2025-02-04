@@ -10,11 +10,10 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
-import net.quepierts.urbaneui.widget.EditorInspector;
+import net.quepierts.urbaneui.widget.Inspector;
 import net.quepierts.wip.gui.LayoutMode;
 import net.quepierts.wip.gui.MouseType;
-import net.quepierts.wip.listener.KeyListener;
-import net.quepierts.wip.listener.KeyType;
+import net.quepierts.wip.listener.*;
 import org.jetbrains.annotations.NotNull;
 
 @Setter
@@ -59,7 +58,7 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
         String key = section.getListener().getKey();
         switch (this.keyType) {
             case MOUSE:
-                this.mouseType = MouseType.valueOf(key);
+                this.mouseType = MouseType.parse(key);
                 break;
             case INPUT:
                 this.key = InputConstants.getKey(key);
@@ -69,11 +68,18 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
         this.keyName = key;
         this.minecraft = Minecraft.getInstance();
         this.font = this.minecraft.font;
+
+        this.name = section.getName();
         this.displayName = section.getDisplayName();
     }
 
     public KeyListenerSection toListenerSection() {
-        KeyListener listener = KeyListener.getInstance(this.keyType, this.keyName);
+        KeyListener listener = switch (this.keyType) {
+            case INPUT -> new InputListener(this.keyName);
+            case MOUSE -> new MouseListener(this.mouseType);
+            case KEYMAPPING -> new KeymappingListener(this.keyName);
+        };
+
         return new KeyListenerSection(
                 listener,
                 this.getX(),
@@ -193,7 +199,8 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
     public void setKeyType(KeyType keyType) {
         if (keyType != this.keyType) {
             this.keyType = keyType;
-            EditorInspector.getInspector().rebuildInspector();
+            this.refreshName();
+            Inspector.getInspector().rebuildInspector();
         }
     }
 
@@ -228,6 +235,11 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
         if ("#DEFAULT#".equals(this.name)) {
             switch (this.keyType) {
                 case MOUSE:
+                    this.keyName = switch (mouseType) {
+                        case LEFT -> "key.mouse.left";
+                        case MIDDLE -> "key.mouse.middle";
+                        case RIGHT -> "key.mouse.right";
+                    };
                     this.displayName = Component.translatable(this.keyName);
                     break;
                 case INPUT:

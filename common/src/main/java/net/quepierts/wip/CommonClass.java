@@ -63,7 +63,7 @@ public class CommonClass {
     }
 
 
-    public static void onKeyInput(int key, int action) {
+    public static void handleInput(int key, int action) {
         if (Minecraft.getInstance().level == null) {
             return;
         }

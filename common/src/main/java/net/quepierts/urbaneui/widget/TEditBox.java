@@ -19,8 +19,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
@@ -31,7 +29,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unused")
-@OnlyIn(Dist.CLIENT)
 public class TEditBox extends AbstractWidget {
     private final Font font;
     @Getter

@@ -24,7 +24,7 @@ public class KeyListenerSection {
     ).apply(instance, (listener, x, y, width, height, colorNormal, colorPressed, name) -> {
         KeyListenerSection section = new KeyListenerSection(listener, x, y, width, height, name);
         colorNormal.ifPresent(section::setColorNormal);
-        colorPressed.ifPresent(section::setColorNormal);
+        colorPressed.ifPresent(section::setColorPressed);
         return section;
     }));
 

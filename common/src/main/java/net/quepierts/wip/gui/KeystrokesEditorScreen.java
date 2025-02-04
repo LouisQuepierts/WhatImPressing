@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.quepierts.urbaneui.widget.EditorInspector;
+import net.quepierts.urbaneui.widget.Inspector;
 import net.quepierts.wip.gui.widget.EditorWindow;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class KeystrokesEditorScreen extends Screen {
     private static final Component HINT_DEL = Component.translatable("hint.wip.del");
 
     private final EditorWindow window;
-    private final EditorInspector inspector;
+    private final Inspector inspector;
 
     public KeystrokesEditorScreen() {
         super(Component.translatable("menu.wip.editor"));
@@ -31,7 +31,7 @@ public class KeystrokesEditorScreen extends Screen {
 
         int left = this.window.getWidth() + this.window.getX() + 8;
         int width = Minecraft.getInstance().getWindow().getGuiScaledWidth() - left;
-        this.inspector = new EditorInspector(left, 0, width, Minecraft.getInstance().getWindow().getGuiScaledHeight());
+        this.inspector = new Inspector(left, 0, width, Minecraft.getInstance().getWindow().getGuiScaledHeight());
 
         this.addRenderableWidget(this.window);
         this.addRenderableWidget(this.inspector);

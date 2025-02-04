@@ -1,0 +1,8 @@
+{
+  "hint.wip.add": "添加按键监听",
+  "hint.wip.del": "删除按键监听",
+  "menu.wip.editor": "编辑器",
+
+  "key.categories.wip": "What I'm Pressing",
+  "key.wip.open_editor": "打开编辑器"
+}

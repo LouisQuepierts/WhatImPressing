@@ -1,6 +1,7 @@
 package net.quepierts.wip.gui.widget;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
-import net.quepierts.urbaneui.widget.EditorInspector;
+import net.quepierts.urbaneui.widget.Inspector;
 import net.quepierts.wip.CommonClass;
 import net.quepierts.wip.gui.LayoutMode;
 import net.quepierts.wip.listener.KeyListenersSetting;
@@ -94,6 +95,7 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
             this.mouseY = localMouseY;
         }
 
+        //RenderSystem.enableScissor(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         pose.pushPose();
         pose.translate(this.getX(), this.getY(), 0);
         pose.scale(EditorWindow.EDITOR_RATIO, EditorWindow.EDITOR_RATIO, 0f);
@@ -107,6 +109,7 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
         }
 
         pose.popPose();
+        //RenderSystem.disableScissor();
 
         graphics.renderOutline(this.getX() - 2, this.getY() - 2, this.getWidth() + 4, this.getHeight() + 4, 0xffffffff);
 
@@ -260,7 +263,7 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
                             this.screenWidth, this.screenHeight
                     );
                     this.sections.add(section);
-                    EditorInspector.getInspector().setInspectObject(section);
+                    Inspector.getInspector().setInspectObject(section);
                     this.setFocused(section);
                 }
                 break;
@@ -328,10 +331,10 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
             this.sections.remove(this.focused);
             this.sections.add(this.focused);
 
-            EditorInspector.getInspector().setInspectObject(section);
+            Inspector.getInspector().setInspectObject(section);
         } else {
             this.focused = null;
-            EditorInspector.getInspector().setInspectObject(this);
+            Inspector.getInspector().setInspectObject(this);
         }
     }
 

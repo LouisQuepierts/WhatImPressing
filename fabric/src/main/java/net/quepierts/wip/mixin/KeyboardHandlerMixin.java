@@ -22,7 +22,7 @@ public class KeyboardHandlerMixin {
     )
     private void wip$keyPressInject(long windowPointer, int key, int scanCode, int action, int modifiers, CallbackInfo ci) {
         if (windowPointer == this.minecraft.getWindow().getWindow()) {
-            CommonClass.onKeyInput(key, action);
+            CommonClass.handleInput(key, action);
         }
     }
 }

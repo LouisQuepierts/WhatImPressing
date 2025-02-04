@@ -19,6 +19,11 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void onKeyPressed(final InputEvent.Key event) {
-        CommonClass.onKeyInput(event.getKey(), event.getAction());
+        CommonClass.handleInput(event.getKey(), event.getAction());
+    }
+
+    @SubscribeEvent
+    public static void onMouseClicked(final InputEvent.MouseButton.Pre event) {
+        CommonClass.handleInput(event.getButton(), event.getAction());
     }
 }
