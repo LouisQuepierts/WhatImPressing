@@ -1,6 +1,5 @@
 package net.quepierts.wip.gui;
 
-import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Locale;
