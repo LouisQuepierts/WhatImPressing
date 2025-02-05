@@ -37,7 +37,7 @@ public class WhatImPressing {
     }
 
     private void onRegisterKeyMappings(final RegisterKeyMappingsEvent event) {
-        event.register(KEY_OPEN_EDITOR.get());
+        event.register(KEY_OPEN_EDITOR);
     }
 
     private void onRegisterShader(final RegisterShadersEvent event)  {
@@ -47,7 +47,7 @@ public class WhatImPressing {
             event.registerShader(
                     new ShaderInstance(
                             provider,
-                            ResourceLocation.fromNamespaceAndPath("urbaneui", "color_field"),
+                            new ResourceLocation("urbaneui", "color_field"),
                             DefaultVertexFormat.POSITION_TEX_COLOR
                     ),
                     Shaders::setColorFieldShader

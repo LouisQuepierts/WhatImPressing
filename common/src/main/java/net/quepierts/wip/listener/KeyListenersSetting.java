@@ -51,7 +51,7 @@ public class KeyListenersSetting {
     public static void toFile(KeyListenersSetting setting, String path) {
         try (FileWriter writer = new FileWriter(path)) {
             DataResult<JsonElement> encode = CODEC.encode(setting, JsonOps.INSTANCE, new JsonObject());
-            JsonElement element = encode.getOrThrow();
+            JsonElement element = encode.get().orThrow();
             writer.write(element.toString());
         } catch (IOException e) {
             LOGGER.warn("Cannot write key listener setting from {}", path, e);
@@ -65,7 +65,7 @@ public class KeyListenersSetting {
             try (FileReader reader = new FileReader(path)) {
                 JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
                 DataResult<Pair<KeyListenersSetting, JsonElement>> decode = CODEC.decode(JsonOps.INSTANCE, object);
-                return decode.getOrThrow().getFirst();
+                return decode.get().orThrow().getFirst();
             } catch (IOException e) {
                 LOGGER.warn("Cannot read key listener setting from {}", path, e);
             }

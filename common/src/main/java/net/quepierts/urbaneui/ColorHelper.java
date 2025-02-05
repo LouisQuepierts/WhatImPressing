@@ -99,7 +99,7 @@ public class ColorHelper {
             } else {
                 hue = 4.0f + (r - g) / delta;
             }
-            hue *= 60.0f; // 转换为角度（0-360）
+            hue *= 60.0f;
             if (hue < 0) hue += 360.0f;
         }
 
@@ -107,34 +107,28 @@ public class ColorHelper {
     }
 
     public static int interpolate(int scolor, int dcolor, float value) {
-        // 约束 value 在 [0.0, 1.0] 范围内
         float t = Math.max(0.0f, Math.min(1.0f, value));
 
-        // 分解起始颜色（scolor）的ARGB通道
-        int sA = (scolor >> 24) & 0xFF; // Alpha
-        int sR = (scolor >> 16) & 0xFF; // Red
-        int sG = (scolor >> 8) & 0xFF;  // Green
-        int sB = scolor & 0xFF;         // Blue
+        int sA = (scolor >> 24) & 0xFF;
+        int sR = (scolor >> 16) & 0xFF;
+        int sG = (scolor >> 8) & 0xFF;
+        int sB = scolor & 0xFF; 
 
-        // 分解目标颜色（dcolor）的ARGB通道
         int dA = (dcolor >> 24) & 0xFF;
         int dR = (dcolor >> 16) & 0xFF;
         int dG = (dcolor >> 8) & 0xFF;
         int dB = dcolor & 0xFF;
 
-        // 对每个通道进行线性插值
         int iA = Math.round(sA + (dA - sA) * t);
         int iR = Math.round(sR + (dR - sR) * t);
         int iG = Math.round(sG + (dG - sG) * t);
         int iB = Math.round(sB + (dB - sB) * t);
 
-        // 确保通道值在 0-255 范围内（因浮点运算可能溢出）
-        iA = Math.clamp(iA, 0, 255);
-        iR = Math.clamp(iR, 0, 255);
-        iG = Math.clamp(iG, 0, 255);
-        iB = Math.clamp(iB, 0, 255);
+        iA = MathHelper.clamp(iA, 0, 255);
+        iR = MathHelper.clamp(iR, 0, 255);
+        iG = MathHelper.clamp(iG, 0, 255);
+        iB = MathHelper.clamp(iB, 0, 255);
 
-        // 重新组合为 ARGB 颜色
         return (iA << 24) | (iR << 16) | (iG << 8) | iB;
     }
 
@@ -143,8 +137,12 @@ public class ColorHelper {
     }
 
     public static int getHueColor(float hue) {
-        int section = Math.clamp((int) (hue / 60), 0, 5);
+        int section = MathHelper.clamp((int) (hue / 60), 0, 5);
         return ColorHelper.interpolate(SPECTRUM[section], SPECTRUM[section + 1], (hue - section * 60f) / 60f);
+    }
+
+    public static int color(int alpha, int color) {
+        return alpha << 24 | color & 16777215;
     }
 
     public record HSVColor(

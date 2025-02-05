@@ -281,6 +281,10 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
         }
     }
 
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     @Override
     public void onInspect(InspectorBuilder builder) {
         builder.title(Component.literal("Key Listener"))

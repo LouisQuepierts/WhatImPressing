@@ -3,6 +3,7 @@ package net.quepierts.urbaneui.widget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.SharedConstants;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -105,7 +106,7 @@ public class TextField extends AbstractWidget {
         int j = Math.max(this.cursorPos, this.highlightPos);
         int k = this.maxLength - this.value.length() - (i - j);
         if (k > 0) {
-            String s = StringUtil.filterText(textToWrite);
+            String s = SharedConstants.filterText(textToWrite);
             int l = s.length();
             if (k < l) {
                 if (Character.isHighSurrogate(s.charAt(k - 1))) {
@@ -326,7 +327,7 @@ public class TextField extends AbstractWidget {
     public boolean charTyped(char codePoint, int modifiers) {
         if (!this.canConsumeInput()) {
             return false;
-        } else if (StringUtil.isAllowedChatCharacter(codePoint)) {
+        } else if (SharedConstants.isAllowedChatCharacter(codePoint)) {
             if (this.isEditable) {
                 this.insertText(Character.toString(codePoint));
             }

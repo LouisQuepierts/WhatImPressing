@@ -11,6 +11,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.quepierts.urbaneui.MathHelper;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
 import net.quepierts.urbaneui.widget.Inspector;
 import net.quepierts.wip.CommonClass;
@@ -211,8 +212,8 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
         int halfWidth = this.focused.getWidth() / 2;
         int halfHeight = this.focused.getHeight() / 2;
 
-        int targetX = Math.clamp(this.focused.getCenterX() + localDragX, halfWidth, this.screenWidth - halfWidth);
-        int targetY = Math.clamp(this.focused.getCenterY() + localDragY, halfHeight, this.screenHeight - halfHeight);
+        int targetX = MathHelper.clamp(this.focused.getCenterX() + localDragX, halfWidth, this.screenWidth - halfWidth);
+        int targetY = MathHelper.clamp(this.focused.getCenterY() + localDragY, halfHeight, this.screenHeight - halfHeight);
 
         int deltaX = targetX - this.focused.getCenterX();
         int deltaY = targetY - this.focused.getCenterY();
@@ -345,7 +346,9 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
         int innerLeft = 4;
         int innerTop = (screenHeight - innerHeight) / 4;
 
-        this.setRectangle(innerWidth, innerHeight, innerLeft, innerTop);
+        this.setPosition(innerLeft, innerTop);
+        this.width = innerWidth;
+        this.height = innerHeight;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
 

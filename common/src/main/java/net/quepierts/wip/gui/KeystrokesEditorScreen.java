@@ -43,7 +43,6 @@ public class KeystrokesEditorScreen extends Screen {
         int screenWidth = window.getGuiScaledWidth();
         int screenHeight = window.getGuiScaledHeight();
 
-        this.renderBlurredBackground(partialTick);
         graphics.fill(0, 0, screenWidth, screenHeight, 0x80000000);
 
         RenderSystem.enableBlend();
@@ -68,7 +67,8 @@ public class KeystrokesEditorScreen extends Screen {
         int left = this.window.getWidth() + this.window.getX() + 8;
         int inspectorWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth() - left;
 
-        this.inspector.setRectangle(inspectorWidth, Minecraft.getInstance().getWindow().getGuiScaledHeight(), left, 0);
+        this.inspector.setSize(inspectorWidth, Minecraft.getInstance().getWindow().getGuiScaledHeight());
+        this.inspector.setPosition(left, 0);
     }
 
     @Override

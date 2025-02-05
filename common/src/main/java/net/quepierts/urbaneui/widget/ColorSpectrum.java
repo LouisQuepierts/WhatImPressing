@@ -9,6 +9,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.quepierts.urbaneui.ColorHelper;
+import net.quepierts.urbaneui.MathHelper;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -53,10 +54,10 @@ public class ColorSpectrum extends AbstractWidget {
 
         for (int i = 0; i < 6; i++) {
             float offset = fragHeight * i;
-            buffer.addVertex(matrix4f, iLeft, iTop + offset, 0.0f).setColor(SPECTRUM[i]);
-            buffer.addVertex(matrix4f, iLeft, bottom + offset, 0.0f).setColor(SPECTRUM[i + 1]);
-            buffer.addVertex(matrix4f, right, bottom + offset, 0.0f).setColor(SPECTRUM[i + 1]);
-            buffer.addVertex(matrix4f, right, iTop + offset, 0.0f).setColor(SPECTRUM[i]);
+            buffer.vertex(matrix4f, iLeft, iTop + offset, 0.0f).color(SPECTRUM[i]).endVertex();
+            buffer.vertex(matrix4f, iLeft, bottom + offset, 0.0f).color(SPECTRUM[i + 1]).endVertex();
+            buffer.vertex(matrix4f, right, bottom + offset, 0.0f).color(SPECTRUM[i + 1]).endVertex();
+            buffer.vertex(matrix4f, right, iTop + offset, 0.0f).color(SPECTRUM[i]).endVertex();
         }
 
         graphics.renderOutline(this.getX(), this.getY(), this.getWidth(), this.getHeight(), 0xffffffff);
@@ -70,7 +71,7 @@ public class ColorSpectrum extends AbstractWidget {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
-        double ratio = Math.clamp((mouseY - this.getY()) / this.getHeight(), 0.0, 1.0);
+        double ratio = MathHelper.clamp((mouseY - this.getY()) / this.getHeight(), 0.0, 1.0);
         this.hue = (float) (ratio * 360.0f);
 
         if (this.callback != null) {

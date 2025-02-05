@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.quepierts.urbaneui.MathHelper;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -70,7 +71,7 @@ public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T
         }
 
         if (mouseY > 20)  {
-            int i = Math.clamp((int) (mouseY / 20) - 1, 0, 1);
+            int i = MathHelper.clamp((int) (mouseY / 20) - 1, 0, 1);
             T value = this.values[i];
 
             if (value != this.selected) {

@@ -16,8 +16,4 @@ public class Shaders {
     public static ShaderInstance getColorFieldShader() {
         return Objects.requireNonNull(colorFieldShader, "Attempted to call getColorFieldShader before shaders have finished loading.");
     }
-
-    public static void register() {
-
-    }
 }

@@ -1,7 +1,5 @@
 package net.quepierts.wip;
 
-import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.InputEvent;
@@ -13,8 +11,7 @@ import net.quepierts.wip.gui.KeystrokesDisplayLayer;
 public class ClientHandler {
     @SubscribeEvent
     public static void onRenderOverlay(final CustomizeGuiOverlayEvent.Chat event) {
-        DeltaTracker timer = Minecraft.getInstance().getTimer();
-        KeystrokesDisplayLayer.INSTANCE.render(event.getGuiGraphics(), timer);
+        KeystrokesDisplayLayer.INSTANCE.render(event.getGuiGraphics(), event.getPartialTick());
     }
 
     @SubscribeEvent

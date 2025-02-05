@@ -7,10 +7,9 @@ import lombok.Setter;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.network.chat.Component;
 import net.quepierts.urbaneui.ColorHelper;
+import net.quepierts.urbaneui.MathHelper;
 import net.quepierts.urbaneui.Shaders;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
@@ -94,8 +93,8 @@ public class ColorField extends AbstractWidget {
         float rx = ((float) mouseX - (this.getX() + 2)) / (this.getWidth() - 4);
         float ry = 1.0f - ((float) mouseY - (this.getY() + 2)) / (this.getHeight() - 4);
 
-        this.saturation = Math.clamp(rx, 0.0f, 1.0f);
-        this.brightness = Math.clamp(ry, 0.0f, 1.0f);
+        this.saturation = MathHelper.clamp(rx, 0.0f, 1.0f);
+        this.brightness = MathHelper.clamp(ry, 0.0f, 1.0f);
         this.updateColor();
     }
 
@@ -123,11 +122,11 @@ public class ColorField extends AbstractWidget {
         RenderSystem.setShader(Shaders::getColorFieldShader);
 
         Matrix4f matrix4f = graphics.pose().last().pose();
-        BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        bufferbuilder.addVertex(matrix4f, (float)left, (float)top, 0).setUv(0, 0).setColor(this.hueColor);
-        bufferbuilder.addVertex(matrix4f, (float)left, (float)bottom, 0).setUv(0, 1).setColor(this.hueColor);
-        bufferbuilder.addVertex(matrix4f, (float)right, (float)bottom, 0).setUv(1, 1).setColor(this.hueColor);
-        bufferbuilder.addVertex(matrix4f, (float)right, (float)top, 0).setUv(1, 0).setColor(this.hueColor);
-        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+        BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
+        bufferbuilder.vertex(matrix4f, (float)left, (float)top, 0).uv(0, 0).color(this.hueColor).endVertex();
+        bufferbuilder.vertex(matrix4f, (float)left, (float)bottom, 0).uv(0, 1).color(this.hueColor).endVertex();
+        bufferbuilder.vertex(matrix4f, (float)right, (float)bottom, 0).uv(1, 1).color(this.hueColor).endVertex();
+        bufferbuilder.vertex(matrix4f, (float)right, (float)top, 0).uv(1, 0).color(this.hueColor).endVertex();
+        BufferUploader.drawWithShader(bufferbuilder.end());
     }
 }

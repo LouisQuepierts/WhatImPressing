@@ -9,6 +9,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.quepierts.urbaneui.MathHelper;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
 import net.quepierts.urbaneui.inspector.InspectorWidget;
 import net.quepierts.wip.gui.widget.Inspectable;
@@ -140,7 +141,7 @@ public class Inspector extends AbstractWidget {
                 0xffffffff
         );
         graphics.fill(left - 1, sliderTop + 3 + channelHeight, left + 3, sliderTop + 4 + channelHeight, 0xffffffff);
-        this.scroll = Math.clamp(this.scroll, 0, this.available);
+        this.scroll = MathHelper.clamp(this.scroll, 0, this.available);
     }
 
     @Override
@@ -216,14 +217,16 @@ public class Inspector extends AbstractWidget {
         return false;
     }
 
+
+
     @Override
-    public boolean mouseScrolled(double pMouseX, double pMouseY, double pScrollX, double pScrollY) {
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double pScrollY) {
         if (!this.isMouseOver(pMouseX, pMouseY)) {
             return false;
         }
 
         this.scroll -= (int) pScrollY * 2;
-        this.scroll = Math.clamp(this.scroll, 0, this.available);
+        this.scroll = MathHelper.clamp(this.scroll, 0, this.available);
 
         return true;
     }
@@ -262,15 +265,14 @@ public class Inspector extends AbstractWidget {
         return false;
     }
 
-    @Override
     public void setHeight(int height) {
-        super.setHeight(height);
+        this.height = height;
         this.frameHeight = height - HEAD_HEIGHT - 8;
     }
 
-    @Override
     public void setSize(int width, int height) {
-        super.setSize(width, height);
+        this.width = width;
+        this.height = height;
         this.frameHeight = height - HEAD_HEIGHT - 8;
     }
 

@@ -10,7 +10,6 @@ import net.quepierts.wip.gui.widget.KeyListenerSection;
 import net.quepierts.wip.listener.InputListener;
 import net.quepierts.wip.listener.KeyListenersSetting;
 import net.quepierts.wip.platform.Services;
-import org.apache.logging.log4j.util.Lazy;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
 
 public class CommonClass {
     public final static List<KeyListenerSection> KEY_LISTENER_SECTIONS = new ArrayList<>();
-    public static final Lazy<KeyMapping> KEY_OPEN_EDITOR;
+    public static final KeyMapping KEY_OPEN_EDITOR;
 
     @Getter
     private static KeyListenersSetting setting;
@@ -68,7 +67,7 @@ public class CommonClass {
             return;
         }
 
-        if (Minecraft.getInstance().screen == null && CommonClass.KEY_OPEN_EDITOR.get().isDown()) {
+        if (Minecraft.getInstance().screen == null && CommonClass.KEY_OPEN_EDITOR.isDown()) {
             Minecraft.getInstance().setScreen(new KeystrokesEditorScreen());
             return;
         }
@@ -83,13 +82,11 @@ public class CommonClass {
     }
 
     static {
-        KEY_OPEN_EDITOR = Lazy.lazy(
-            () -> new KeyMapping(
-                    "key.wip.open_editor",
-                    InputConstants.Type.KEYSYM,
-                    GLFW.GLFW_KEY_RIGHT_BRACKET,
-                    "key.categories.wip"
-            )
+        KEY_OPEN_EDITOR = new KeyMapping(
+                "key.wip.open_editor",
+                InputConstants.Type.KEYSYM,
+                GLFW.GLFW_KEY_RIGHT_BRACKET,
+                "key.categories.wip"
         );
     }
 }

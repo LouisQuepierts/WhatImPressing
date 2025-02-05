@@ -5,7 +5,6 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.quepierts.urbaneui.Shaders;
@@ -20,18 +19,18 @@ public class WhatImPressing implements ClientModInitializer {
 
         HudRenderCallback.EVENT.register(this::onRenderOverlay);
         CoreShaderRegistrationCallback.EVENT.register(this::onRegisterShader);
-        KeyBindingHelper.registerKeyBinding(CommonClass.KEY_OPEN_EDITOR.get());
+        KeyBindingHelper.registerKeyBinding(CommonClass.KEY_OPEN_EDITOR);
     }
 
     private void onRegisterShader(CoreShaderRegistrationCallback.RegistrationContext context) throws IOException {
         context.register(
-                ResourceLocation.fromNamespaceAndPath("urbaneui", "color_field"),
+                new ResourceLocation("urbaneui", "color_field"),
                 DefaultVertexFormat.POSITION_TEX_COLOR,
                 Shaders::setColorFieldShader
         );
     }
 
-    private void onRenderOverlay(GuiGraphics graphics, DeltaTracker deltaTracker) {
-        KeystrokesDisplayLayer.INSTANCE.render(graphics, deltaTracker);
+    private void onRenderOverlay(GuiGraphics graphics, float partialTick) {
+        KeystrokesDisplayLayer.INSTANCE.render(graphics, partialTick);
     }
 }

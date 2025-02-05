@@ -3,29 +3,23 @@ package net.quepierts.wip.gui;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.Setter;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.LayeredDraw;
-import net.minecraft.resources.ResourceLocation;
 import net.quepierts.wip.CommonClass;
-import net.quepierts.wip.Constants;
 import net.quepierts.wip.gui.widget.KeyListenerSection;
 import net.quepierts.wip.listener.KeyListenersSetting;
 import org.jetbrains.annotations.NotNull;
 
 @Setter
-public class KeystrokesDisplayLayer implements LayeredDraw.Layer {
+public class KeystrokesDisplayLayer {
     public static final int MIDDLE_WIDTH = 40;
     public static final int HALF_MIDDLE_WIDTH = MIDDLE_WIDTH / 2;
 
     public static final KeystrokesDisplayLayer INSTANCE = new KeystrokesDisplayLayer();
-    public static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(Constants.MODID, "keystrokes");
 
     private boolean hide = false;
 
-    @Override
-    public void render(@NotNull GuiGraphics graphics, @NotNull DeltaTracker tracker) {
+    public void render(@NotNull GuiGraphics graphics, float partialTick) {
         if (this.hide) {
             return;
         }

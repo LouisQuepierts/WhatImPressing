@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.quepierts.urbaneui.MathHelper;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -60,7 +61,7 @@ public class InspectorIntegerSlider extends InspectorModifyWidget<Integer> {
             return;
         }
 
-        float interpolate = Math.clamp(((float) mouseX - 8) / (width - 18), 0.0f, 1.0f);
+        float interpolate = MathHelper.clamp(((float) mouseX - 8) / (width - 18), 0.0f, 1.0f);
         float target = (this.max - this.min) * interpolate + this.min;
         int value = Math.round(target / this.step) * this.step;
 
@@ -76,7 +77,7 @@ public class InspectorIntegerSlider extends InspectorModifyWidget<Integer> {
             return;
         }
 
-        float interpolate = Math.clamp(((float) mouseX - 8) / (width - 18), 0.0f, 1.0f);
+        float interpolate = MathHelper.clamp(((float) mouseX - 8) / (width - 18), 0.0f, 1.0f);
         float target = (this.max - this.min) * interpolate + this.min;
         int value = Math.round(target / this.step) * this.step;
 
