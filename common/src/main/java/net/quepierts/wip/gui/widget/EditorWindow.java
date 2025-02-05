@@ -9,10 +9,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
 import net.quepierts.urbaneui.widget.Inspector;
 import net.quepierts.wip.CommonClass;
+import net.quepierts.wip.gui.ColorSet;
 import net.quepierts.wip.gui.LayoutMode;
 import net.quepierts.wip.listener.KeyListenersSetting;
 import org.jetbrains.annotations.NotNull;
@@ -44,6 +46,8 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
 
     @Getter
     private EditorKeyListenerSection focused;
+    private EditorKeyListenerSection objectCopy;
+    private EditorKeyListenerSection displayCopy;
 
     private int screenWidth;
     private int screenHeight;
@@ -87,8 +91,8 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
         int localMouseY = (int) ((mouseY - this.getY()) / EditorWindow.EDITOR_RATIO);
 
         if (this.isHovered()) {
-            graphics.hLine(this.getX(), this.getX() + this.getWidth(), mouseY, 0xff00ff00);
-            graphics.vLine(mouseX, this.getY(), this.getY() + this.getHeight(), 0xff00ff00);
+            graphics.hLine(this.getX() - 1, this.getX() + this.getWidth(), mouseY, 0xff00ff00);
+            graphics.vLine(mouseX, this.getY() - 2, this.getY() + this.getHeight() + 1, 0xff00ff00);
 
             this.mouseX = localMouseX;
             this.mouseY = localMouseY;
@@ -100,11 +104,19 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
         pose.scale(EditorWindow.EDITOR_RATIO, EditorWindow.EDITOR_RATIO, 0f);
 
         for (EditorKeyListenerSection section : this.sections) {
-            section.render(graphics);
+            section.renderWidget(graphics, localMouseX, localMouseY, partialTick);
         }
 
         if (this.focused != null) {
-            this.focused.renderOutline(graphics);
+            this.focused.renderOutline(graphics, 0xffffffff, 2);
+        }
+
+        if (this.objectCopy != null) {
+            this.objectCopy.renderOutline(graphics, 0xffbbffbb, 4);
+        }
+
+        if (this.displayCopy != null) {
+            this.displayCopy.renderOutline(graphics, 0xffffbbbb, 4);
         }
 
         pose.popPose();
@@ -275,6 +287,45 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
             case InputConstants.KEY_S:
                 if ((modifiers & 2) != 0) {
                     this.save();
+                }
+                break;
+            case InputConstants.KEY_R:
+                if (this.focused != null && Screen.hasControlDown() && !Screen.hasShiftDown() && !Screen.hasAltDown()) {
+                    this.focused.setBaseColor(new ColorSet(0xbb808080, 0xbbb0b0b0));
+                    this.focused.setFrameColor(new ColorSet(0x00000000, 0x00000000));
+                    this.focused.setTextColor(new ColorSet(0xffffffff, 0xffffffff));
+                    Inspector.getInspector().rebuildInspector();
+                }
+                break;
+            case InputConstants.KEY_C:
+                if (Screen.hasControlDown() && !Screen.hasAltDown()) {
+                    if (Screen.hasControlDown()) {
+                        this.displayCopy = this.focused;
+                    } else {
+                        this.objectCopy = this.focused;
+                    }
+                }
+                break;
+            case InputConstants.KEY_V:
+                if (Screen.hasControlDown() && !Screen.hasAltDown()) {
+                    if (Screen.hasControlDown()) {
+                        if (this.displayCopy != null && this.focused != null && this.focused != this.displayCopy) {
+                            this.focused.copyDisplay(this.displayCopy);
+                            Inspector.getInspector().rebuildInspector();
+                        }
+                    } else {
+                        if (this.objectCopy != null) {
+                            EditorKeyListenerSection copied = new EditorKeyListenerSection(this.objectCopy);
+                            copied.move(
+                                    this.mouseX, this.mouseY,
+                                    this.horizontalLayout, this.verticalLayout,
+                                    this.screenWidth, this.screenHeight
+                            );
+                            this.sections.add(copied);
+                            Inspector.getInspector().setInspectObject(copied);
+                            this.setFocused(copied);
+                        }
+                    }
                 }
                 break;
         }

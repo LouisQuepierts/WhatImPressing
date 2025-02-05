@@ -14,21 +14,20 @@ public class InspectorKeyBox extends InspectorModifyWidget<InputConstants.Key> {
     private InputConstants.Key key;
 
     public InspectorKeyBox(Component message, Supplier<InputConstants.Key> getter, Consumer<InputConstants.Key> setter) {
-        super(20, message, getter, setter);
+        super(22, message, getter, setter);
         this.key = getter.get();
     }
 
     @Override
     public void render(GuiGraphics graphics, int width, int mouseX, int mouseY, float partialTick, boolean hovered) {
-        int buttonWidth = Math.min(width / 2, 100) - 8;
-        int left = width - 8 - buttonWidth;
-        int right = width - 8;
+        int buttonWidth = Math.min(width / 2, 100);
+        int left = width - buttonWidth;
 
-        graphics.drawWordWrap(Minecraft.getInstance().font, this.message, 8, 8, left, 0xffffffff);
+        graphics.drawWordWrap(Minecraft.getInstance().font, this.message, 0, 8, left, 0xffffffff);
         RenderSystem.enableBlend();
 
         int hover = hovered ? mouseY / 20 : -1;
-        graphics.fill(left, 2, right, 22, 0xbb000000);
+        graphics.fill(left, 2, width, 22, 0xbb000000);
         if (this.active && this.isFocused()) {
             graphics.renderOutline(left, 2, buttonWidth, 20, 0xffbbbbff);
         } else if (hover == 0) {

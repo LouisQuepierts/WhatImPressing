@@ -29,7 +29,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unused")
-public class TEditBox extends AbstractWidget {
+public class TextField extends AbstractWidget {
     private final Font font;
     @Getter
     private String value = "";
@@ -59,7 +59,7 @@ public class TEditBox extends AbstractWidget {
 
     private int autoConfirm = -1;
 
-    public TEditBox(Font font, int x, int y, int width, int height, Component message) {
+    public TextField(Font font, int x, int y, int width, int height, Component message) {
         super(x, y, width, height, message);
         this.font = font;
     }
@@ -126,7 +126,7 @@ public class TEditBox extends AbstractWidget {
         }
     }
 
-    private void onValueChange(String newText) {
+    protected void onValueChange(String newText) {
         if (this.responder != null) {
             this.responder.accept(newText);
         }
@@ -360,14 +360,14 @@ public class TEditBox extends AbstractWidget {
 
         if (this.isVisible()) {
 
-            RenderSystem.enableBlend();
-            //RenderUtils.fillRoundRect(guiGraphics, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 0.5f, this.isFocused() ? Palette.HIGHLIGHT_COLOR : 0xa0101010);
-
-            if (this.isFocused()) {
-                int width = this.getWidth() - 2;
-                int height = this.getHeight() - 2;
-                //RenderUtils.fillRoundRect(guiGraphics, this.getX() + 1, this.getY() + 1, width, height, 0.5f, 0xff101010);
-            }
+//            RenderSystem.enableBlend();
+//            RenderUtils.fillRoundRect(guiGraphics, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 0.5f, this.isFocused() ? Palette.HIGHLIGHT_COLOR : 0xa0101010);
+//
+//            if (this.isFocused()) {
+//                int width = this.getWidth() - 2;
+//                int height = this.getHeight() - 2;
+//                RenderUtils.fillRoundRect(guiGraphics, this.getX() + 1, this.getY() + 1, width, height, 0.5f, 0xff101010);
+//            }
 
             int textColor = this.isEditable ? this.textColor : this.textColorUneditable;
             int i = this.cursorPos - this.displayPos;

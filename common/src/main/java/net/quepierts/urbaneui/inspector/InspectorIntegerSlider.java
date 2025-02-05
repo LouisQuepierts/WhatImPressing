@@ -28,28 +28,25 @@ public class InspectorIntegerSlider extends InspectorModifyWidget<Integer> {
 
     @Override
     public void render(GuiGraphics graphics, int width, int mouseX, int mouseY, float partialTick, boolean hovered) {
-        int buttonWidth = width - 8;
-        int left = 8;
-
         Font font = Minecraft.getInstance().font;
-        graphics.drawString(font, this.message, 8, 4, 0xffffffff);
+        graphics.drawString(font, this.message, 0, 4, 0xffffffff);
 
         String text = Integer.toString(this.value);
         int textWidth = font.width(text);
-        graphics.drawString(font, text, width - textWidth - 8, 4, 0xffffffff);
+        graphics.drawString(font, text, width - textWidth, 4, 0xffffffff);
         RenderSystem.enableBlend();
 
-        int length = width - left - 18;
+        int length = width - 18;
         float interpolate = (float) (this.value - this.min) / (this.max - this.min);
         int offset = 4 + (int) (length * interpolate);
 
         boolean hover = hovered && mouseY > 14;
-        graphics.fill(left, 14, width - 8, 34, 0xbb000000);
-        graphics.fill(left + 4, 23, width - 12, 25, 0x88ffffff);
-        graphics.fill(left + offset, 17, left + offset + 2, 31, 0xffffffff);
+        graphics.fill(0, 14, width, 34, 0xbb000000);
+        graphics.fill(4, 23, width - 4, 25, 0x88ffffff);
+        graphics.fill(offset, 17, offset + 2, 31, 0xffffffff);
 
         if (hover) {
-            graphics.renderOutline(left, 14, buttonWidth - 8, 20, 0xffffffff);
+            graphics.renderOutline(0, 14, width, 20, 0xffffffff);
         }
     }
 

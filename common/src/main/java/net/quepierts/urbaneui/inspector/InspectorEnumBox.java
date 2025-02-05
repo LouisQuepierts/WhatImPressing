@@ -16,22 +16,21 @@ public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T
     private T selected;
 
     public InspectorEnumBox(Component message, Supplier<T> getter, Consumer<T> setter, T[] values) {
-        super(20, message, getter, setter);
+        super(22, message, getter, setter);
         this.values = values;
         this.selected = getter.get();
     }
 
     @Override
     public void render(GuiGraphics graphics, int width, int mouseX, int mouseY, float partialTick, boolean hovered) {
-        int buttonWidth = width / 2 - 8;
-        int left = width - 8 - buttonWidth;
-        int right = width - 8;
+        int buttonWidth = width / 2;
+        int left = width - buttonWidth;
 
-        graphics.drawWordWrap(Minecraft.getInstance().font, this.message, 8, 8, left, 0xffffffff);
+        graphics.drawWordWrap(Minecraft.getInstance().font, this.message, 0, 8, left, 0xffffffff);
         RenderSystem.enableBlend();
 
         int hover = hovered ? mouseY / 20 : -1;
-        graphics.fill(left, 2, right, 22, 0xbb000000);
+        graphics.fill(left, 2, width, 20, 0xbb000000);
         if (this.dropped) {
             graphics.renderOutline(left, 2, buttonWidth, 20, 0xffbbbbff);
         } else if (hover == 0) {
@@ -49,7 +48,7 @@ public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T
         if (this.dropped) {
             for (int i = 0; i < values.length; i++) {
                 RenderSystem.enableBlend();
-                graphics.fill(left, 22 + 20 * i, right, 42 + 20 * i, 0xbb000000);
+                graphics.fill(left, 22 + 20 * i, width, 42 + 20 * i, 0xbb000000);
                 if (hover == i + 1) {
                     graphics.renderOutline(left, 22 + 20 * i, buttonWidth, 20, 0xffffffff);
                 }
@@ -82,13 +81,5 @@ public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T
     @Override
     public int getHeight() {
         return this.dropped ? 24 + this.values.length * 20 : 24;
-    }
-
-    @Override
-    public void setFocused(boolean focused) {
-        super.setFocused(focused);
-        if (!focused) {
-            this.dropped = false;
-        }
     }
 }

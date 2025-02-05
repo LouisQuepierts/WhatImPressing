@@ -59,20 +59,38 @@ public class KeystrokesDisplayLayer implements LayeredDraw.Layer {
                 y = height - y;
             }
 
-            graphics.fill(
-                    x - halfWidth,
-                    y - halfHeight,
-                    x + halfWidth,
-                    y + halfHeight,
-                    section.getColor()
-            );
-            graphics.drawCenteredString(
-                    Minecraft.getInstance().font,
-                    section.getDisplayName(),
-                    x,
-                    y - 4,
-                    0xffffffff
-            );
+            int baseColorValue = section.getBaseColorValue();
+            if ((baseColorValue & 0xff000000) != 0) {
+                graphics.fill(
+                        x - halfWidth,
+                        y - halfHeight,
+                        x + halfWidth,
+                        y + halfHeight,
+                        baseColorValue
+                );
+            }
+
+            int frameColorValue = section.getFrameColorValue();
+            if ((frameColorValue & 0xff000000) != 0) {
+                graphics.renderOutline(
+                        x - halfHeight,
+                        y - halfHeight,
+                        section.getWidth(),
+                        section.getHeight(),
+                        frameColorValue
+                );
+            }
+
+            int textColorValue = section.getTextColorValue();
+            if ((textColorValue & 0xff000000) != 0) {
+                graphics.drawCenteredString(
+                        Minecraft.getInstance().font,
+                        section.getDisplayName(),
+                        x,
+                        y - 4,
+                        textColorValue
+                );
+            }
             RenderSystem.disableBlend();
         }
     }

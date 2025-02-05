@@ -79,21 +79,24 @@ public class Inspector extends AbstractWidget {
         boolean hovered = this.isMouseOver(mouseX, mouseY);
 
         double scale = minecraft.getWindow().getGuiScale();
+
+        int innerLeft = this.getX() + 8;
+        int innerWidth = this.getWidth() - 16;
         RenderSystem.enableScissor(
-                (int) (this.getX() * scale), (int) (minecraft.getWindow().getHeight() - (this.getY() + this.height - 4) * scale),
-                (int) (this.getWidth() * scale), (int) (this.frameHeight * scale)
+                (int) (innerLeft * scale), (int) (minecraft.getWindow().getHeight() - (this.getY() + this.height - 4) * scale),
+                (int) (innerWidth * scale), (int) (this.frameHeight * scale)
         );
 
         PoseStack pose = graphics.pose();
         pose.pushPose();
         int offset = (int) (this.scroll / this.ratio);
-        pose.translate(this.getX(), top + 1 - offset, 0);
+        pose.translate(innerLeft, top + 1 - offset, 0);
 
         int maxHeight = this.height + offset;
         int height = HEAD_HEIGHT;
         int width = this.width - 2;
 
-        mouseX -= this.getX();
+        mouseX -= this.getX() + 8;
         mouseY -= this.getY() - offset;
 
         for (InspectorWidget widget : this.widgets) {
@@ -101,7 +104,7 @@ public class Inspector extends AbstractWidget {
             if (height > offset && height < maxHeight) {
                 widget.render(
                         graphics,
-                        width,
+                        innerWidth,
                         mouseX,
                         mouseY - height,
                         partialTick,
@@ -144,19 +147,13 @@ public class Inspector extends AbstractWidget {
             return false;
         }
 
-        mouseX -= this.getX();
-        mouseY -= this.getY() - this.scroll;
-
-        if (mouseY < HEAD_HEIGHT) {
-            return false;
-        }
+        mouseX -= this.getX() + 8;
+        mouseY -= this.getY() - this.scroll / this.ratio;
 
         int height = HEAD_HEIGHT;
         for (InspectorWidget widget : this.widgets) {
-            height += widget.getHeight();
-
-            if (mouseY < height) {
-                widget.onMousePressed(mouseX, mouseY - height + widget.getHeight(), button, this.width);
+            if (mouseY > height && mouseY < height + widget.getHeight()) {
+                widget.onMousePressed(mouseX, mouseY - height, button, this.width);
 
                 if (this.focus != null && this.focus != widget) {
                     this.focus.setFocused(false);
@@ -166,6 +163,8 @@ public class Inspector extends AbstractWidget {
                 this.focus.setFocused(true);
                 return true;
             }
+
+            height += widget.getHeight();
         }
 
         if (this.focus != null) {
@@ -181,21 +180,16 @@ public class Inspector extends AbstractWidget {
             return false;
         }
 
-        mouseX -= this.getX();
+        mouseX -= this.getX() + 8;
         mouseY -= this.getY() - this.scroll / this.ratio;
-
-        if (mouseY < HEAD_HEIGHT) {
-            return false;
-        }
 
         int height = HEAD_HEIGHT;
         for (InspectorWidget widget : this.widgets) {
-            height += widget.getHeight();
-
-            if (mouseY < height) {
-                widget.onMouseReleased(mouseX, mouseY - height + widget.getHeight(), button, this.width);
+            if (mouseY > height && mouseY < height + widget.getHeight()) {
+                widget.onMouseReleased(mouseX, mouseY - height, button, this.width);
                 return true;
             }
+            height += widget.getHeight();
         }
         return false;
     }
@@ -206,21 +200,16 @@ public class Inspector extends AbstractWidget {
             return false;
         }
 
-        mouseX -= this.getX();
+        mouseX -= this.getX() + 8;
         mouseY -= this.getY() - this.scroll / this.ratio;
-
-        if (mouseY < HEAD_HEIGHT) {
-            return false;
-        }
 
         int height = HEAD_HEIGHT;
         for (InspectorWidget widget : this.widgets) {
-            height += widget.getHeight();
-
-            if (mouseY < height) {
-                widget.onMouseDragging(mouseX, mouseY - height + widget.getHeight(), button, dragX, dragY, this.width);
+            if (mouseY > height && mouseY < height + widget.getHeight()) {
+                widget.onMouseDragging(mouseX, mouseY - height, button, dragX, dragY, this.width);
                 return true;
             }
+            height += widget.getHeight();
         }
         return false;
     }
@@ -231,7 +220,7 @@ public class Inspector extends AbstractWidget {
             return false;
         }
 
-        this.scroll -= (int) pScrollY;
+        this.scroll -= (int) pScrollY * 2;
         this.scroll = Math.clamp(this.scroll, 0, this.available);
 
         return true;

@@ -47,6 +47,11 @@ public class InspectorBuilder {
         return this;
     }
 
+    public InspectorBuilder colorPicker(Component message, Supplier<Integer> getter, Consumer<Integer> setter) {
+        this.builder.add(new InspectorColorPicker(message, getter, setter));
+        return this;
+    }
+
     public List<InspectorWidget> build() {
         return this.builder.build();
     }

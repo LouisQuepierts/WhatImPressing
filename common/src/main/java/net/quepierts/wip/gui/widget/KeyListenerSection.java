@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.network.chat.Component;
+import net.quepierts.wip.gui.ColorSet;
 import net.quepierts.wip.listener.KeyListener;
 
 import java.util.Optional;
@@ -18,13 +19,15 @@ public class KeyListenerSection {
             Codec.INT.fieldOf("y").forGetter(KeyListenerSection::getY),
             Codec.INT.fieldOf("width").forGetter(KeyListenerSection::getWidth),
             Codec.INT.fieldOf("height").forGetter(KeyListenerSection::getHeight),
-            Codec.INT.optionalFieldOf("normal_color").forGetter(section -> Optional.of(section.colorNormal)),
-            Codec.INT.optionalFieldOf("pressed_color").forGetter(section -> Optional.of(section.colorPressed)),
-            Codec.STRING.fieldOf("name").forGetter(KeyListenerSection::getName)
-    ).apply(instance, (listener, x, y, width, height, colorNormal, colorPressed, name) -> {
+            Codec.STRING.fieldOf("name").forGetter(KeyListenerSection::getName),
+            ColorSet.CODEC.optionalFieldOf("baseColor").forGetter(section -> Optional.of(section.baseColor)),
+            ColorSet.CODEC.optionalFieldOf("frameColor").forGetter(section -> Optional.of(section.frameColor)),
+            ColorSet.CODEC.optionalFieldOf("textColor").forGetter(section -> Optional.of(section.textColor))
+    ).apply(instance, (listener, x, y, width, height, name, baseColor, frameColor, textColor) -> {
         KeyListenerSection section = new KeyListenerSection(listener, x, y, width, height, name);
-        colorNormal.ifPresent(section::setColorNormal);
-        colorPressed.ifPresent(section::setColorPressed);
+        baseColor.ifPresent(section::setBaseColor);
+        frameColor.ifPresent(section::setFrameColor);
+        textColor.ifPresent(section::setTextColor);
         return section;
     }));
 
@@ -34,8 +37,9 @@ public class KeyListenerSection {
     private int width;
     private int height;
 
-    private int colorNormal = 0xbb808080;
-    private int colorPressed = 0xbbb0b0b0;
+    private ColorSet baseColor = new ColorSet(0xbb808080, 0xbbb0b0b0);
+    private ColorSet frameColor = new ColorSet(0x00000000, 0x00000000);
+    private ColorSet textColor = new ColorSet(0xffffffff, 0xffffffff);
 
     protected String name = "#DEFAULT#";
     private Component displayName;
@@ -57,15 +61,17 @@ public class KeyListenerSection {
         this.setName(name);
     }
 
-    public KeyListenerSection(KeyListener listener, int x, int y, int width, int height, String name, int colorNormal, int colorPressed) {
+    public KeyListenerSection(KeyListener listener, int x, int y, int width, int height, String name, ColorSet baseColor, ColorSet frameColor, ColorSet textColor) {
         this.listener = listener;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.colorNormal = colorNormal;
-        this.colorPressed = colorPressed;
         this.name = name;
+
+        this.baseColor = new ColorSet(baseColor);
+        this.frameColor = new ColorSet(frameColor);
+        this.textColor = new ColorSet(textColor);
     }
 
     public void setName(String name) {
@@ -73,8 +79,16 @@ public class KeyListenerSection {
         this.updateName();
     }
 
-    public int getColor() {
-        return this.listener.isPressed() ? this.colorPressed : this.colorNormal;
+    public int getBaseColorValue() {
+        return this.baseColor.getColor(this.listener.isPressed());
+    }
+
+    public int getFrameColorValue() {
+        return this.frameColor.getColor(this.listener.isPressed());
+    }
+
+    public int getTextColorValue() {
+        return this.textColor.getColor(this.listener.isPressed());
     }
 
     protected void updateName() {
@@ -92,4 +106,5 @@ public class KeyListenerSection {
 
         return this.displayName;
     }
+
 }

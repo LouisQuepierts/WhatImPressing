@@ -11,6 +11,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
 import net.quepierts.urbaneui.widget.Inspector;
+import net.quepierts.wip.gui.ColorSet;
 import net.quepierts.wip.gui.LayoutMode;
 import net.quepierts.wip.gui.MouseType;
 import net.quepierts.wip.listener.*;
@@ -22,11 +23,9 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
     private final Minecraft minecraft;
     private final Font font;
 
-    private int colorNormal = 0xbb808080;
-    private int colorPressed = 0xbbb0b0b0;
-
-    private LayoutMode horizontalLayout = LayoutMode.LEFT;
-    private LayoutMode verticalLayout = LayoutMode.LEFT;
+    private ColorSet baseColor = new ColorSet(0xbb808080, 0xbbb0b0b0);
+    private ColorSet frameColor = new ColorSet(0x00000000, 0x00000000);
+    private ColorSet textColor = new ColorSet(0xffffffff, 0xffffffff);
 
     private Component displayName = Component.literal("none");
     private String name = "#DEFAULT#";
@@ -51,8 +50,10 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
 
     public EditorKeyListenerSection(KeyListenerSection section) {
         super(section.getX(), section.getY(), section.getWidth(), section.getHeight(), Component.literal("section"));
-        this.colorNormal = section.getColorNormal();
-        this.colorPressed = section.getColorPressed();
+        this.baseColor = new ColorSet(section.getBaseColor());
+        this.frameColor = new ColorSet(section.getFrameColor());
+        this.textColor = new ColorSet(section.getTextColor());
+
         this.keyType = section.getListener().getType();
 
         String key = section.getListener().getKey();
@@ -73,6 +74,34 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
         this.displayName = section.getDisplayName();
     }
 
+    public EditorKeyListenerSection(EditorKeyListenerSection section) {
+        super(section.getX(), section.getY(), section.getWidth(), section.getHeight(), Component.literal("section"));
+
+        this.baseColor = new ColorSet(section.getBaseColor());
+        this.frameColor = new ColorSet(section.getFrameColor());
+        this.textColor = new ColorSet(section.getTextColor());
+
+        this.centerX = section.getCenterX();
+        this.centerY = section.getCenterY();
+
+        this.keyType = section.getKeyType();
+        switch (this.keyType) {
+            case MOUSE:
+                this.mouseType = section.getMouseType();
+                break;
+            case INPUT:
+                this.key = section.getKey();
+                break;
+        }
+
+        this.keyName = section.getKeyName();
+        this.minecraft = Minecraft.getInstance();
+        this.font = this.minecraft.font;
+
+        this.name = section.getName();
+        this.displayName = section.getDisplayName();
+    }
+
     public KeyListenerSection toListenerSection() {
         KeyListener listener = switch (this.keyType) {
             case INPUT -> new InputListener(this.keyName);
@@ -86,7 +115,17 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
                 this.getY(),
                 this.width,
                 this.height,
-                name);
+                this.name,
+                this.baseColor,
+                this.frameColor,
+                this.textColor
+        );
+    }
+
+    public void copyDisplay(EditorKeyListenerSection other) {
+        this.baseColor = new ColorSet(other.getBaseColor());
+        this.frameColor = new ColorSet(other.getFrameColor());
+        this.textColor = new ColorSet(other.getTextColor());
     }
 
     @Override
@@ -94,56 +133,47 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
         int halfWidth = this.getWidth() / 2;
         int halfHeight = this.getHeight() / 2;
 
-        graphics.fill(
-                this.getX() - halfWidth,
-                this.getY() - halfHeight,
-                this.getX() + halfWidth,
-                this.getY() + halfHeight,
-                this.colorNormal);
-        graphics.drawCenteredString(
-                this.font,
-                this.displayName,
-                this.getX(),
-                this.getY() - 4,
-                0xffffffff
-        );
-    }
-
-    public void render(GuiGraphics graphics) {
         int x = this.centerX;
         int y = this.centerY;
 
-        int halfWidth = this.getWidth() / 2;
-        int halfHeight = this.getHeight() / 2;
-
+        this.isHovered = this.isMouseOver(mouseX, mouseY);
         graphics.fill(
                 x - halfWidth,
                 y - halfHeight,
                 x + halfWidth,
                 y + halfHeight,
-                this.colorNormal);
+                this.baseColor.getColor(this.isHovered)
+        );
+        graphics.renderOutline(
+                x - halfWidth,
+                y - halfHeight,
+                this.getWidth(),
+                this.getHeight(),
+                this.frameColor.getColor(this.isHovered)
+        );
         graphics.drawCenteredString(
                 this.font,
                 this.displayName,
                 x,
                 y - 4,
-                0xffffffff
+                this.textColor.getColor(this.isHovered)
         );
     }
 
-    public void renderOutline(GuiGraphics graphics) {
+    public void renderOutline(GuiGraphics graphics, int color, int expand) {
         int x = this.centerX;
         int y = this.centerY;
 
         int halfWidth = this.getWidth() / 2;
         int halfHeight = this.getHeight() / 2;
+        int expand2 = expand * 2;
 
         graphics.renderOutline(
-                x - halfWidth - 2,
-                y - halfHeight - 2,
-                this.width + 4,
-                this.height + 4,
-                0xffffffff
+                x - halfWidth - expand,
+                y - halfHeight - expand,
+                this.width + expand2,
+                this.height + expand2,
+                color
         );
     }
 
@@ -268,6 +298,16 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
         builder.title(Component.literal("Information"))
                 .intSlider(Component.literal("Width"), this::getWidth, this::setWidth, 20, 80, 2)
                 .intSlider(Component.literal("Height"), this::getHeight, this::setHeight, 20, 80, 2)
-                .editBox(Component.literal("Name"), this::getName, this::setName);
+                .title(Component.literal("Display"))
+                .editBox(Component.literal("Name"), this::getName, this::setName)
+                .title(Component.literal("Base Color"))
+                .colorPicker(Component.literal("Normal"), this.baseColor::getNormal, this.baseColor::setNormal)
+                .colorPicker(Component.literal("Pressed"), this.baseColor::getPressed, this.baseColor::setPressed)
+                .title(Component.literal("Frame Color"))
+                .colorPicker(Component.literal("Normal"), this.frameColor::getNormal, this.frameColor::setNormal)
+                .colorPicker(Component.literal("Pressed"), this.frameColor::getPressed, this.frameColor::setPressed)
+                .title(Component.literal("Text Color"))
+                .colorPicker(Component.literal("Normal"), this.textColor::getNormal, this.textColor::setNormal)
+                .colorPicker(Component.literal("Pressed"), this.textColor::getPressed, this.textColor::setPressed);
     }
 }

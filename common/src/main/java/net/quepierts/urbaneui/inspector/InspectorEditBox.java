@@ -1,37 +1,44 @@
 package net.quepierts.urbaneui.inspector;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
+import net.quepierts.urbaneui.widget.TextField;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class InspectorEditBox extends InspectorModifyWidget<String> {
-    private final EditBox editBox;
+    private final TextField editBox;
 
     public InspectorEditBox(Component message, Supplier<String> getter, Consumer<String> setter) {
         super(36, message, getter, setter);
 
-        this.editBox = new EditBox(Minecraft.getInstance().font, 8, 16, 100, 20, message);
+        this.editBox = new TextField(Minecraft.getInstance().font, 0, 16, 100, 20, message);
         this.editBox.setValue(getter.get());
         this.editBox.setResponder(setter);
     }
 
     @Override
     public void render(GuiGraphics graphics, int width, int mouseX, int mouseY, float partialTick, boolean hovered) {
-        int boxWidth = width - 16;
-
         Font font = Minecraft.getInstance().font;
-        graphics.drawString(font, this.message, 8, 4, 0xffffffff);
+        graphics.drawString(font, this.message, 0, 4, 0xffffffff);
 
-        if (this.editBox.getWidth() != boxWidth) {
-            this.editBox.setWidth(boxWidth);
+        if (this.editBox.getWidth() != width) {
+            this.editBox.setWidth(width);
         }
 
+        RenderSystem.enableBlend();
+        graphics.fill(0, 16, this.editBox.getWidth(), 16 + this.editBox.getHeight(), 0x88000000);
+        if (this.editBox.isMouseOver(mouseX, mouseY)) {
+            graphics.renderOutline(0, 16, this.editBox.getWidth(), this.editBox.getHeight(), 0xffffffff);
+        } else if (this.isFocused()) {
+            graphics.renderOutline(0, 16, this.editBox.getWidth(), this.editBox.getHeight(), 0xffbbbbff);
+        }
         this.editBox.render(graphics, mouseX, mouseY, partialTick);
+        RenderSystem.disableBlend();
     }
 
     @Override
