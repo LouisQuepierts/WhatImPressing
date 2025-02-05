@@ -6,7 +6,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.FastColor;
 import net.quepierts.urbaneui.ColorHelper;
 import net.quepierts.urbaneui.MathHelper;
 import org.jetbrains.annotations.NotNull;
