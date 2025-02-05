@@ -123,6 +123,7 @@ public class ColorField extends AbstractWidget {
 
         Matrix4f matrix4f = graphics.pose().last().pose();
         BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
         bufferbuilder.vertex(matrix4f, (float)left, (float)top, 0).uv(0, 0).color(this.hueColor).endVertex();
         bufferbuilder.vertex(matrix4f, (float)left, (float)bottom, 0).uv(0, 1).color(this.hueColor).endVertex();
         bufferbuilder.vertex(matrix4f, (float)right, (float)bottom, 0).uv(1, 1).color(this.hueColor).endVertex();
