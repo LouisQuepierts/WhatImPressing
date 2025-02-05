@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
 import net.quepierts.urbaneui.inspector.InspectorWidget;
@@ -24,6 +25,7 @@ public class Inspector extends AbstractWidget {
     private Inspectable target;
 
     private InspectorWidget focus;
+    private InspectorWidget copy;
 
     private int frameHeight;
     private int scroll = 0;
@@ -237,7 +239,17 @@ public class Inspector extends AbstractWidget {
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
         if (this.focus != null) {
-            return this.focus.onKeyReleased(keyCode, scanCode, modifiers);
+            if (this.focus.onKeyReleased(keyCode, scanCode, modifiers)) {
+                return true;
+            }
+
+            if (Screen.isCopy(keyCode)) {
+                this.copy = this.focus;
+                return true;
+            } else if (this.copy != null && Screen.isPaste(keyCode)) {
+                this.focus.paste(this.copy);
+                return true;
+            }
         }
         return false;
     }

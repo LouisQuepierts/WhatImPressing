@@ -45,7 +45,11 @@ public class InspectorKeyBox extends InspectorModifyWidget<InputConstants.Key> {
 
     @Override
     public void onMousePressed(double mouseX, double mouseY, int button, int width) {
-        this.active = true;
+        if (button != 0) {
+            return;
+        }
+
+        this.active = !this.active;
     }
 
     @Override
@@ -58,5 +62,23 @@ public class InspectorKeyBox extends InspectorModifyWidget<InputConstants.Key> {
         this.setter.accept(this.key);
         this.active = false;
         return true;
+    }
+
+    @Override
+    public void setFocused(boolean focused) {
+        super.setFocused(focused);
+        if (!focused) {
+            this.active = false;
+        }
+    }
+
+    @Override
+    public boolean paste(InspectorWidget copy) {
+        if (copy instanceof InspectorKeyBox box) {
+            this.key = box.key;
+            this.setter.accept(this.key);
+            return true;
+        }
+        return false;
     }
 }

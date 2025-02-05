@@ -72,6 +72,10 @@ public class InspectorColorPicker extends InspectorModifyWidget<Integer> {
 
     @Override
     public void onMousePressed(double mouseX, double mouseY, int button, int width) {
+        if (button != 0) {
+            return;
+        }
+
         if (!this.drop) {
             this.drop = true;
             return;
@@ -98,6 +102,10 @@ public class InspectorColorPicker extends InspectorModifyWidget<Integer> {
 
     @Override
     public void onMouseReleased(double mouseX, double mouseY, int button, int width) {
+        if (button != 0) {
+            return;
+        }
+
         if (!this.drop) {
             return;
         }
@@ -159,6 +167,18 @@ public class InspectorColorPicker extends InspectorModifyWidget<Integer> {
         if (!focused && this.focused != null) {
             this.focused.setFocused(false);
         }
+    }
+
+    @Override
+    public boolean paste(InspectorWidget copy) {
+        if (copy instanceof InspectorColorPicker picker) {
+            this.opacityBar.setOpacity(picker.opacityBar.getOpacity());
+            this.opacityBar.setColor(picker.opacityBar.getColor());
+            this.colorSpectrum.setHue(picker.colorSpectrum.getHue());
+            this.colorField.setColor(picker.colorField.getColor());this.setter.accept(FastColor.ARGB32.color(this.opacityBar.getOpacity(), this.colorField.getColor()));
+            return true;
+        }
+        return false;
     }
 
     public void setARGB(int argb) {

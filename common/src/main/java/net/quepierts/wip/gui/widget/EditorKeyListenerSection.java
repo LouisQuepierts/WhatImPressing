@@ -122,7 +122,7 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
         );
     }
 
-    public void copyDisplay(EditorKeyListenerSection other) {
+    public void pasteDisplay(EditorKeyListenerSection other) {
         this.baseColor = new ColorSet(other.getBaseColor());
         this.frameColor = new ColorSet(other.getFrameColor());
         this.textColor = new ColorSet(other.getTextColor());

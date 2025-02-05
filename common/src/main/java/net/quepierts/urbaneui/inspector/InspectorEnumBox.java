@@ -65,6 +65,10 @@ public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T
 
     @Override
     public void onMouseReleased(double mouseX, double mouseY, int button, int width) {
+        if (button != 0) {
+            return;
+        }
+
         if (mouseY > 20)  {
             int i = Math.clamp((int) (mouseY / 20) - 1, 0, 1);
             T value = this.values[i];
@@ -81,5 +85,18 @@ public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T
     @Override
     public int getHeight() {
         return this.dropped ? 24 + this.values.length * 20 : 24;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean paste(InspectorWidget copy) {
+        if (copy instanceof InspectorEnumBox<?> box) {
+            if (box.selected.getClass() == this.selected.getClass()) {
+                this.selected = (T) box.selected;
+                this.setter.accept(this.selected);
+                return true;
+            }
+        }
+        return false;
     }
 }

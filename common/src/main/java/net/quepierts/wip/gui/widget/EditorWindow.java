@@ -46,8 +46,7 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
 
     @Getter
     private EditorKeyListenerSection focused;
-    private EditorKeyListenerSection objectCopy;
-    private EditorKeyListenerSection displayCopy;
+    private EditorKeyListenerSection copy;
 
     private int screenWidth;
     private int screenHeight;
@@ -111,12 +110,8 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
             this.focused.renderOutline(graphics, 0xffffffff, 2);
         }
 
-        if (this.objectCopy != null) {
-            this.objectCopy.renderOutline(graphics, 0xffbbffbb, 4);
-        }
-
-        if (this.displayCopy != null) {
-            this.displayCopy.renderOutline(graphics, 0xffffbbbb, 4);
+        if (this.copy != null) {
+            this.copy.renderOutline(graphics, 0xffbbffbb, 4);
         }
 
         pose.popPose();
@@ -298,33 +293,27 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
                 }
                 break;
             case InputConstants.KEY_C:
-                if (Screen.hasControlDown() && !Screen.hasAltDown()) {
-                    if (Screen.hasControlDown()) {
-                        this.displayCopy = this.focused;
-                    } else {
-                        this.objectCopy = this.focused;
-                    }
+                if (Screen.hasControlDown() && !Screen.hasAltDown() && !Screen.hasShiftDown()) {
+                    this.copy = this.focused;
                 }
                 break;
             case InputConstants.KEY_V:
-                if (Screen.hasControlDown() && !Screen.hasAltDown()) {
-                    if (Screen.hasControlDown()) {
-                        if (this.displayCopy != null && this.focused != null && this.focused != this.displayCopy) {
-                            this.focused.copyDisplay(this.displayCopy);
+                if (this.copy != null && Screen.hasControlDown() && !Screen.hasAltDown() && !Screen.hasShiftDown()) {
+                    if (this.focused != null) {
+                        if (this.focused != this.copy) {
+                            this.focused.pasteDisplay(this.copy);
                             Inspector.getInspector().rebuildInspector();
                         }
                     } else {
-                        if (this.objectCopy != null) {
-                            EditorKeyListenerSection copied = new EditorKeyListenerSection(this.objectCopy);
-                            copied.move(
-                                    this.mouseX, this.mouseY,
-                                    this.horizontalLayout, this.verticalLayout,
-                                    this.screenWidth, this.screenHeight
-                            );
-                            this.sections.add(copied);
-                            Inspector.getInspector().setInspectObject(copied);
-                            this.setFocused(copied);
-                        }
+                        EditorKeyListenerSection copied = new EditorKeyListenerSection(this.copy);
+                        copied.move(
+                                this.mouseX, this.mouseY,
+                                this.horizontalLayout, this.verticalLayout,
+                                this.screenWidth, this.screenHeight
+                        );
+                        this.sections.add(copied);
+                        Inspector.getInspector().setInspectObject(copied);
+                        this.setFocused(copied);
                     }
                 }
                 break;

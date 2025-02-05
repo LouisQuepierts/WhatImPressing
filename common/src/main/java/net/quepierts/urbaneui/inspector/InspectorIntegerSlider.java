@@ -85,4 +85,14 @@ public class InspectorIntegerSlider extends InspectorModifyWidget<Integer> {
             this.setter.accept(value);
         }
     }
+
+    @Override
+    public boolean paste(InspectorWidget copy) {
+        if (copy instanceof InspectorIntegerSlider slider) {
+            this.value = slider.value;
+            this.setter.accept(this.value);
+            return true;
+        }
+        return false;
+    }
 }

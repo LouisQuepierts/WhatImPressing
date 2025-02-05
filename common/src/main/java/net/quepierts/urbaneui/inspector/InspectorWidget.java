@@ -28,4 +28,6 @@ public abstract class InspectorWidget {
     public boolean onKeyReleased(int keyCode, int scanCode, int modifiers) { return false; }
 
     public boolean charTyped(char codePoint, int modifiers) { return false; }
+
+    public boolean paste(InspectorWidget copy) { return false; }
 }

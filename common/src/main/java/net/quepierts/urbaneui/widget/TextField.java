@@ -44,7 +44,7 @@ public class TextField extends AbstractWidget {
     private int textColor = 0xffffffff;
     @Setter
     private int textColorUneditable = 7368816;
-    private final int innerX = 8;
+    private final int innerX = 0;
 
     @Nullable
     private Consumer<String> responder;
