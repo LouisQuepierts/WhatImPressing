@@ -379,9 +379,9 @@ public class EditorWindow extends AbstractWidget implements Inspectable {
 
     @Override
     public void onInspect(InspectorBuilder builder) {
-        builder.title(Component.literal("Layout"))
-                .enumBox(Component.literal("Horizontal"), this::getHorizontalLayout, this::setHorizontalLayout, LayoutMode.values())
-                .enumBox(Component.literal("Vertical"), this::getVerticalLayout, this::setVerticalLayout, LayoutMode.values());
+        builder.title(Component.translatable("inspector.wip.layout"))
+                .enumBox(Component.translatable("inspector.wip.layout.horizontal"), this::getHorizontalLayout, this::setHorizontalLayout, LayoutMode.values())
+                .enumBox(Component.translatable("inspector.wip.layout.vertical"), this::getVerticalLayout, this::setVerticalLayout, LayoutMode.values());
     }
 
     public void save() {

@@ -9,7 +9,7 @@ public class MouseListener extends KeyListener {
 
     public MouseListener(MouseType type) {
         super(KeyType.MOUSE, type.name().toLowerCase());
-        this.key = InputConstants.getKey(type.key);
+        this.key = InputConstants.getKey(type.getKey());
     }
 
     public MouseListener(String key) {

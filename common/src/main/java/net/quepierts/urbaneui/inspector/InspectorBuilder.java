@@ -3,6 +3,7 @@ package net.quepierts.urbaneui.inspector;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.network.chat.Component;
+import net.quepierts.urbaneui.DisplayableType;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -27,7 +28,7 @@ public class InspectorBuilder {
         return this;
     }
 
-    public <T extends Enum<?>> InspectorBuilder enumBox(Component message, Supplier<T> getter, Consumer<T> setter, T[] values) {
+    public <T extends DisplayableType> InspectorBuilder enumBox(Component message, Supplier<T> getter, Consumer<T> setter, T[] values) {
         this.builder.add(new InspectorEnumBox<>(message, getter, setter, values));
         return this;
     }
