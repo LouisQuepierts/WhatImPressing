@@ -7,6 +7,9 @@
   "key.wip.open_editor": "Open Editor",
 
   "enums.wip.mouse_type": "Mouse Type",
+  "enums.wip.mouse_type.left": "Left",
+  "enums.wip.mouse_type.right": "Right",
+  "enums.wip.mouse_type.middle": "Middle",
 
   "enums.wip.key_type": "Key Type",
   "enums.wip.key_type.input": "Input",

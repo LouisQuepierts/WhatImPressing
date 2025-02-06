@@ -7,6 +7,9 @@
   "key.wip.open_editor": "打開編輯器",
 
   "enums.wip.mouse_type": "鼠標按鍵",
+  "enums.wip.mouse_type.left": "左鍵",
+  "enums.wip.mouse_type.right": "右鍵",
+  "enums.wip.mouse_type.middle": "中鍵",
 
   "enums.wip.key_type": "監聽類型",
   "enums.wip.key_type.input": "鍵盤",
