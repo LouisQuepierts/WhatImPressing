@@ -11,7 +11,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
 import net.quepierts.urbaneui.inspector.InspectorWidget;
-import net.quepierts.urbaneui.inspector.Inspectable;
+import net.quepierts.wip.gui.widget.Inspectable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

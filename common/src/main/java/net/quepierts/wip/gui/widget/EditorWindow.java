@@ -11,7 +11,6 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.quepierts.urbaneui.inspector.Inspectable;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
 import net.quepierts.urbaneui.widget.Inspector;
 import net.quepierts.wip.CommonClass;

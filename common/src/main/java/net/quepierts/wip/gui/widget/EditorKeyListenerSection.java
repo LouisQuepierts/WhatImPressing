@@ -9,7 +9,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.quepierts.urbaneui.inspector.Inspectable;
 import net.quepierts.urbaneui.inspector.InspectorBuilder;
 import net.quepierts.urbaneui.widget.Inspector;
 import net.quepierts.wip.gui.ColorSet;
