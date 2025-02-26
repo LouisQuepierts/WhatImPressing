@@ -3,7 +3,7 @@
   "hint.wip.del": "删除按鍵監聽",
   "menu.wip.editor": "編輯器",
 
-  "key.categories.wip": "What I'm Pressing",
+  "key.categories.wip": "正擊何鍵",
   "key.wip.open_editor": "打開編輯器",
 
   "enums.wip.mouse_type": "鼠標按鍵",

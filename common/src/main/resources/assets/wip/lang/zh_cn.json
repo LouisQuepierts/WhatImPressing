@@ -3,7 +3,7 @@
   "hint.wip.del": "删除按键监听",
   "menu.wip.editor": "编辑器",
 
-  "key.categories.wip": "What I'm Pressing",
+  "key.categories.wip": "正击何键",
   "key.wip.open_editor": "打开编辑器",
 
   "enums.wip.mouse_type": "鼠标按键",
@@ -16,7 +16,7 @@
   "enums.wip.key_type.mouse": "鼠标",
   "enums.wip.key_type.keymapping": "按键绑定",
 
-  "enums.wip.layout_mode": "排版模式",
+  "enums.wip.layout_mode": "佈局模式",
   "enums.wip.layout_mode.left": "左对齐",
   "enums.wip.layout_mode.right": "右对其",
 

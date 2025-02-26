@@ -3,7 +3,7 @@
   "hint.wip.del": "删除按鍵監聽",
   "menu.wip.editor": "編輯器",
 
-  "key.categories.wip": "What I'm Pressing",
+  "key.categories.wip": "我喺度揿咩掣",
   "key.wip.open_editor": "打開編輯器",
 
   "enums.wip.mouse_type": "鼠標按鈕",
@@ -35,7 +35,7 @@
   "inspector.wip.color.normal": "默認",
   "inspector.wip.color.pressed": "按下",
 
-  "inspector.wip.layout": "排版",
+  "inspector.wip.layout": "佈局",
   "inspector.wip.layout.horizontal": "橫向",
   "inspector.wip.layout.vertical": "縱向"
 }
