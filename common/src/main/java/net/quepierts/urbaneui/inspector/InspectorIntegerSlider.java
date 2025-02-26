@@ -37,7 +37,7 @@ public class InspectorIntegerSlider extends InspectorModifyWidget<Integer> {
         graphics.drawString(font, text, width - textWidth, 4, 0xffffffff);
         RenderSystem.enableBlend();
 
-        int length = width - 18;
+        int length = width - 10;
         float interpolate = (float) (this.value - this.min) / (this.max - this.min);
         int offset = 4 + (int) (length * interpolate);
 
@@ -57,11 +57,11 @@ public class InspectorIntegerSlider extends InspectorModifyWidget<Integer> {
             return;
         }
 
-        if (mouseX < 8 || mouseX > width - 8) {
+        if (mouseX < 8 || mouseX > width - 4) {
             return;
         }
 
-        float interpolate = MathHelper.clamp(((float) mouseX - 8) / (width - 18), 0.0f, 1.0f);
+        float interpolate = MathHelper.clamp(((float) mouseX - 8) / (width - 10), 0.0f, 1.0f);
         float target = (this.max - this.min) * interpolate + this.min;
         int value = Math.round(target / this.step) * this.step;
 
@@ -77,7 +77,7 @@ public class InspectorIntegerSlider extends InspectorModifyWidget<Integer> {
             return;
         }
 
-        float interpolate = MathHelper.clamp(((float) mouseX - 8) / (width - 18), 0.0f, 1.0f);
+        float interpolate = MathHelper.clamp(((float) mouseX - 8) / (width - 10), 0.0f, 1.0f);
         float target = (this.max - this.min) * interpolate + this.min;
         int value = Math.round(target / this.step) * this.step;
 

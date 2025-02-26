@@ -45,3 +45,7 @@ dependencies {
 jar {
     finalizedBy('reobfJar')
 }
+
+reobfJar {
+    destinationDirectory = rootProject.file("/release/${project.version}")
+}
