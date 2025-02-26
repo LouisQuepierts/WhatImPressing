@@ -13,7 +13,7 @@ import net.quepierts.wip.gui.KeystrokesDisplayLayer;
 public class ClientHandler {
     @SubscribeEvent
     public static void onRenderOverlay(final CustomizeGuiOverlayEvent.Chat event) {
-        DeltaTracker timer = Minecraft.getInstance().getTimer();
+        DeltaTracker timer = Minecraft.getInstance().getDeltaTracker();
         KeystrokesDisplayLayer.INSTANCE.render(event.getGuiGraphics(), timer);
     }
 
