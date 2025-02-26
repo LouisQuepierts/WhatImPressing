@@ -15,6 +15,10 @@ dependencies {
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
 }
 
+remapJar {
+    destinationDirectory = rootProject.file("/release/${project.version}")
+}
+
 loom {
     def aw = project(':common').file("src/main/resources/${mod_id}.accesswidener")
     if (aw.exists()) {

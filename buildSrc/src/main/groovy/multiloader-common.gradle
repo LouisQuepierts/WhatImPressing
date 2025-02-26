@@ -13,6 +13,7 @@ java {
     //withJavadocJar()
 }
 
+
 repositories {
     mavenCentral()
     // https://docs.gradle.org/current/userguide/declaring_repositories.html#declaring_content_exclusively_found_in_one_repository
@@ -75,6 +76,8 @@ jar {
                     'Implementation-Vendor' : mod_author,
                     'Built-On-Minecraft'    : minecraft_version])
     }
+
+    destinationDirectory = rootProject.file("/release/${project.version}")
 }
 
 processResources {
