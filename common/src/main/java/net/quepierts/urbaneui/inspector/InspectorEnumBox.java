@@ -27,7 +27,7 @@ public class InspectorEnumBox<T extends DisplayableType> extends InspectorModify
         int buttonWidth = width / 2;
         int left = width - buttonWidth;
 
-        graphics.drawWordWrap(Minecraft.getInstance().font, this.message, 0, 8, left, 0xffffffff);
+        graphics.drawString(Minecraft.getInstance().font, this.message, 0, 8, 0xffffffff);
         RenderSystem.enableBlend();
 
         int hover = hovered ? mouseY / 20 : -1;
