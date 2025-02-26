@@ -1,6 +1,6 @@
 package net.quepierts.urbaneui;
 
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 
 public class ColorHelper {
     private static final int[] SPECTRUM = {
@@ -16,7 +16,7 @@ public class ColorHelper {
     public static int toRGB(float hue, float saturation, float brightness) {
         if (saturation == 0f) {
             int gray = (int) (brightness * 255);
-            return FastColor.ARGB32.color(0xff, gray, gray, gray);
+            return ARGB.color(0xff, gray, gray, gray);
         }
 
         float range = hue / 60.0f;
@@ -62,7 +62,7 @@ public class ColorHelper {
                 break;
         }
 
-        return FastColor.ARGB32.color(
+        return ARGB.color(
                 0xff,
                 (int) (r * 255 + 0.5f),
                 (int) (g * 255 + 0.5f),

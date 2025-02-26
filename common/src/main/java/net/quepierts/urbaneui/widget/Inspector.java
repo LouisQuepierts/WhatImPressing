@@ -73,6 +73,7 @@ public class Inspector extends AbstractWidget {
 
         graphics.hLine(this.getX() + 8, this.getX() + this.getWidth() - 8, top, 0xffffffff);
         graphics.drawCenteredString(minecraft.font, "Inspector", this.getX() + this.width / 2, 8, 0xffffffff);
+        graphics.flush();
 
         if (this.widgets == null) {
             return;
@@ -103,7 +104,7 @@ public class Inspector extends AbstractWidget {
 
         for (InspectorWidget widget : this.widgets) {
 
-            if (height > offset && height < maxHeight) {
+            if (height + widget.getHeight() > offset && height < maxHeight) {
                 widget.render(
                         graphics,
                         innerWidth,

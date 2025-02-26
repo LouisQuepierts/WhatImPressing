@@ -1,11 +1,10 @@
 package net.quepierts.urbaneui.inspector;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.quepierts.urbaneui.ColorHelper;
 import net.quepierts.urbaneui.widget.ColorField;
 import net.quepierts.urbaneui.widget.ColorSpectrum;
@@ -36,7 +35,7 @@ public class InspectorColorPicker extends InspectorModifyWidget<Integer> {
         this.colorSpectrum = new ColorSpectrum(scale + 8, 24, 10, scale);
         this.opacityBar = new OpacityBar(scale + 22, 24, 10, scale);
 
-        this.opacityBar.setOpacity(FastColor.ARGB32.alpha(argb));
+        this.opacityBar.setOpacity(ARGB.alpha(argb));
 
         this.colorField.setColor(255 << 24 | argb);
         this.colorField.setCallback(this.opacityBar::setColor);
@@ -59,7 +58,7 @@ public class InspectorColorPicker extends InspectorModifyWidget<Integer> {
 
         int previewLeft = width - 20;
         graphics.renderOutline(previewLeft, 2, 16, 16, mouseY < 20 && hovered ? 0xffffffff : 0x88000000);
-        graphics.fill(previewLeft + 1, 3, width - 5, 17, FastColor.ARGB32.color(this.opacityBar.getOpacity(), this.colorField.getColor()));
+        graphics.fill(previewLeft + 1, 3, width - 5, 17, ARGB.color(this.opacityBar.getOpacity(), this.colorField.getColor()));
 
         if (this.drop) {
             for (AbstractWidget widget : this.children) {
@@ -94,7 +93,7 @@ public class InspectorColorPicker extends InspectorModifyWidget<Integer> {
 
                 widget.setFocused(true);
                 this.focused = widget;
-                this.setter.accept(FastColor.ARGB32.color(this.opacityBar.getOpacity(), this.colorField.getColor()));
+                this.setter.accept(ARGB.color(this.opacityBar.getOpacity(), this.colorField.getColor()));
                 break;
             }
         }
@@ -130,7 +129,7 @@ public class InspectorColorPicker extends InspectorModifyWidget<Integer> {
 
         if (this.focused != null) {
             this.focused.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
-            this.setter.accept(FastColor.ARGB32.color(this.opacityBar.getOpacity(), this.colorField.getColor()));
+            this.setter.accept(ARGB.color(this.opacityBar.getOpacity(), this.colorField.getColor()));
         }
     }
 
@@ -175,7 +174,7 @@ public class InspectorColorPicker extends InspectorModifyWidget<Integer> {
             this.opacityBar.setOpacity(picker.opacityBar.getOpacity());
             this.opacityBar.setColor(picker.opacityBar.getColor());
             this.colorSpectrum.setHue(picker.colorSpectrum.getHue());
-            this.colorField.setColor(picker.colorField.getColor());this.setter.accept(FastColor.ARGB32.color(this.opacityBar.getOpacity(), this.colorField.getColor()));
+            this.colorField.setColor(picker.colorField.getColor());this.setter.accept(ARGB.color(this.opacityBar.getOpacity(), this.colorField.getColor()));
             return true;
         }
         return false;

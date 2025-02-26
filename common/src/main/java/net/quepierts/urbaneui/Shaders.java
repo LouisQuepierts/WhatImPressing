@@ -1,23 +1,18 @@
 package net.quepierts.urbaneui;
 
-import lombok.Setter;
-import net.minecraft.client.renderer.ShaderInstance;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.client.renderer.ShaderDefines;
+import net.minecraft.client.renderer.ShaderProgram;
+import net.minecraft.resources.ResourceLocation;
 
 public class Shaders {
-    @Nullable
-    @Setter
-    private static ShaderInstance colorFieldShader;
+    public static final ShaderProgram COLOR_FIELD;
 
-    @NotNull
-    public static ShaderInstance getColorFieldShader() {
-        return Objects.requireNonNull(colorFieldShader, "Attempted to call getColorFieldShader before shaders have finished loading.");
-    }
-
-    public static void register() {
-
+    static {
+        COLOR_FIELD = new ShaderProgram(
+                ResourceLocation.fromNamespaceAndPath("urbaneui", "core/color_field"),
+                DefaultVertexFormat.POSITION_TEX_COLOR,
+                ShaderDefines.EMPTY
+        );
     }
 }

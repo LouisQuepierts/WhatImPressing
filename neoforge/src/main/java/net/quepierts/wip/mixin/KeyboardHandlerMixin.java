@@ -16,7 +16,7 @@ public class KeyboardHandlerMixin {
 
     @Inject(
             method = "keyPress",
-            at = @At(value = "RETURN")
+            at = @At(value = "TAIL")
     )
     private void wip$keyPressInject(long windowPointer, int key, int scanCode, int action, int modifiers, CallbackInfo ci) {
         if (windowPointer == this.minecraft.getWindow().getWindow()) {

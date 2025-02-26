@@ -18,7 +18,7 @@
 
   "enums.wip.layout_mode": "佈局模式",
   "enums.wip.layout_mode.left": "左对齐",
-  "enums.wip.layout_mode.right": "右对其",
+  "enums.wip.layout_mode.right": "右对齐",
 
   "inspector.wip.key_listener": "按键监听器",
   "inspector.wip.key_listener.type": "类型",

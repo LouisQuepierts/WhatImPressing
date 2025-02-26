@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
@@ -33,13 +33,13 @@ public class OpacityBar extends AbstractWidget {
         int right = iLeft + innerWidth;
         int bottom = iTop + fragHeight;
 
-        int transparent = FastColor.ARGB32.color(0, this.color);
+        int transparent = ARGB.color(0, this.color);
 
         graphics.fillGradient(iLeft, iTop, right, bottom, transparent, this.color);
         graphics.renderOutline(this.getX(), this.getY(), this.getWidth(), this.getHeight(), 0xffffffff);
 
         int selectionY = this.getY() + (int) (this.opacity / 255f * this.getHeight()) - 2;
-        int interpolation = FastColor.ARGB32.color(this.opacity, this.color);
+        int interpolation = ARGB.color(this.opacity, this.color);
 
         graphics.fill(this.getX() - 1, selectionY, this.getX() + this.getWidth() + 1, selectionY + 4, 0xffffffff);
         graphics.fill(this.getX(), selectionY + 1, this.getX() + this.getWidth(), selectionY + 3, interpolation);

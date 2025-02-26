@@ -4,12 +4,8 @@
         "srcrgb": "srcalpha",
         "dstrgb": "1-srcalpha"
     },
-    "vertex": "urbaneui:uv_color",
-    "fragment": "urbaneui:color_field",
-    "attributes": [
-        "Color",
-        "UV0"
-    ],
+    "vertex": "minecraft:core/position_tex_color",
+    "fragment": "urbaneui:core/color_field",
     "samplers": [
     ],
     "uniforms": [

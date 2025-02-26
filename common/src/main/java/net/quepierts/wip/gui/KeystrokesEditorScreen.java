@@ -43,7 +43,7 @@ public class KeystrokesEditorScreen extends Screen {
         int screenWidth = window.getGuiScaledWidth();
         int screenHeight = window.getGuiScaledHeight();
 
-        this.renderBlurredBackground(partialTick);
+        this.renderBlurredBackground();
         graphics.fill(0, 0, screenWidth, screenHeight, 0x80000000);
 
         RenderSystem.enableBlend();

@@ -7,8 +7,6 @@ import lombok.Setter;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.network.chat.Component;
 import net.quepierts.urbaneui.ColorHelper;
 import net.quepierts.urbaneui.Shaders;
@@ -120,7 +118,7 @@ public class ColorField extends AbstractWidget {
         int right = left + scale;
         int bottom = top + scale;
 
-        RenderSystem.setShader(Shaders::getColorFieldShader);
+        RenderSystem.setShader(Shaders.COLOR_FIELD);
 
         Matrix4f matrix4f = graphics.pose().last().pose();
         BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);

@@ -40,24 +40,28 @@ public class ColorSpectrum extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        VertexConsumer buffer = graphics.bufferSource().getBuffer(RenderType.gui());
-        Matrix4f matrix4f = graphics.pose().last().pose();
+        graphics.drawSpecial(
+                multiBufferSource -> {
+                    Matrix4f matrix4f = graphics.pose().last().pose();
+                    VertexConsumer buffer = multiBufferSource.getBuffer(RenderType.gui());
 
-        float innerWidth = this.getWidth() - 4;
-        float fragHeight = (this.getHeight() - 4) / 6f;
+                    float innerWidth = this.getWidth() - 4;
+                    float fragHeight = (this.getHeight() - 4) / 6f;
 
-        float iTop = this.getY() + 2;
-        float iLeft = this.getX() + 2;
-        float right = iLeft + innerWidth;
-        float bottom = iTop + fragHeight;
+                    float iTop = this.getY() + 2;
+                    float iLeft = this.getX() + 2;
+                    float right = iLeft + innerWidth;
+                    float bottom = iTop + fragHeight;
 
-        for (int i = 0; i < 6; i++) {
-            float offset = fragHeight * i;
-            buffer.addVertex(matrix4f, iLeft, iTop + offset, 0.0f).setColor(SPECTRUM[i]);
-            buffer.addVertex(matrix4f, iLeft, bottom + offset, 0.0f).setColor(SPECTRUM[i + 1]);
-            buffer.addVertex(matrix4f, right, bottom + offset, 0.0f).setColor(SPECTRUM[i + 1]);
-            buffer.addVertex(matrix4f, right, iTop + offset, 0.0f).setColor(SPECTRUM[i]);
-        }
+                    for (int i = 0; i < 6; i++) {
+                        float offset = fragHeight * i;
+                        buffer.addVertex(matrix4f, iLeft, iTop + offset, 0.0f).setColor(SPECTRUM[i]);
+                        buffer.addVertex(matrix4f, iLeft, bottom + offset, 0.0f).setColor(SPECTRUM[i + 1]);
+                        buffer.addVertex(matrix4f, right, bottom + offset, 0.0f).setColor(SPECTRUM[i + 1]);
+                        buffer.addVertex(matrix4f, right, iTop + offset, 0.0f).setColor(SPECTRUM[i]);
+                    }
+                }
+        );
 
         graphics.renderOutline(this.getX(), this.getY(), this.getWidth(), this.getHeight(), 0xffffffff);
 
