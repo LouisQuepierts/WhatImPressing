@@ -4,5 +4,38 @@
   "menu.wip.editor": "Editor",
 
   "key.categories.wip": "What I'm Pressing",
-  "key.wip.open_editor": "Open Editor"
+  "key.wip.open_editor": "Open Editor",
+
+  "enums.wip.mouse_type": "Mouse Type",
+  "enums.wip.mouse_type.left": "Left",
+  "enums.wip.mouse_type.right": "Right",
+  "enums.wip.mouse_type.middle": "Middle",
+
+  "enums.wip.key_type": "Key Type",
+  "enums.wip.key_type.input": "Input",
+  "enums.wip.key_type.mouse": "Mouse",
+  "enums.wip.key_type.keymapping": "Keymapping",
+
+  "enums.wip.layout_mode": "Layout Mode",
+  "enums.wip.layout_mode.left": "Left",
+  "enums.wip.layout_mode.right": "Right",
+
+  "inspector.wip.key_listener": "Key Listener",
+  "inspector.wip.key_listener.type": "Type",
+  "inspector.wip.key_listener.mouse_type": "Mouse",
+  "inspector.wip.key_listener.key": "Key",
+  "inspector.wip.shape": "Shape",
+  "inspector.wip.shape.width": "Width",
+  "inspector.wip.shape.height": "Height",
+  "inspector.wip.shape.name": "Name",
+  "inspector.wip.color": "Color",
+  "inspector.wip.color.base": "Base",
+  "inspector.wip.color.frame": "Frame",
+  "inspector.wip.color.text": "Text",
+  "inspector.wip.color.normal": "Normal",
+  "inspector.wip.color.pressed": "Pressed",
+
+  "inspector.wip.layout": "Layout",
+  "inspector.wip.layout.horizontal": "Horizontal",
+  "inspector.wip.layout.vertical": "Vertical"
 }

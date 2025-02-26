@@ -1,22 +1,27 @@
 package net.quepierts.wip.gui;
 
 import com.google.common.collect.ImmutableMap;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import net.minecraft.network.chat.Component;
+import net.quepierts.urbaneui.DisplayableType;
 
 import java.util.Locale;
 import java.util.Map;
 
-public enum MouseType {
-    LEFT("key.mouse.left"),
-    RIGHT("key.mouse.right"),
-    MIDDLE("key.mouse.middle");
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public enum MouseType implements DisplayableType {
+    LEFT("key.mouse.left", Component.translatable("enums.wip.mouse_type.left")),
+    RIGHT("key.mouse.right", Component.translatable("enums.wip.mouse_type.right")),
+    MIDDLE("key.mouse.middle", Component.translatable("enums.wip.mouse_type.middle"));
 
-    public final String key;
+    private static final Component TYPE_NAME = Component.translatable("enums.wip.mouse_type");
+    private static final Map<String, MouseType> REFERENCE;
 
-    private final static Map<String, MouseType> REFERENCE;
-
-    MouseType(String key) {
-        this.key = key;
-    }
+    private final String key;
+    private final Component displayName;
 
     public static MouseType parse(String string) {
         return REFERENCE.get(string.toUpperCase(Locale.ROOT));
@@ -30,5 +35,10 @@ public enum MouseType {
         }
 
         REFERENCE = builder.build();
+    }
+
+    @Override
+    public Component getTypeDisplayName() {
+        return TYPE_NAME;
     }
 }

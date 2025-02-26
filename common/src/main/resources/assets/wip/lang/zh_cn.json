@@ -3,6 +3,39 @@
   "hint.wip.del": "删除按键监听",
   "menu.wip.editor": "编辑器",
 
-  "key.categories.wip": "What I'm Pressing",
-  "key.wip.open_editor": "打开编辑器"
+  "key.categories.wip": "正击何键",
+  "key.wip.open_editor": "打开编辑器",
+
+  "enums.wip.mouse_type": "鼠标按键",
+  "enums.wip.mouse_type.left": "左键",
+  "enums.wip.mouse_type.right": "右键",
+  "enums.wip.mouse_type.middle": "中键",
+
+  "enums.wip.key_type": "监听类型",
+  "enums.wip.key_type.input": "键盘",
+  "enums.wip.key_type.mouse": "鼠标",
+  "enums.wip.key_type.keymapping": "按键绑定",
+
+  "enums.wip.layout_mode": "佈局模式",
+  "enums.wip.layout_mode.left": "左对齐",
+  "enums.wip.layout_mode.right": "右对齐",
+
+  "inspector.wip.key_listener": "按键监听器",
+  "inspector.wip.key_listener.type": "类型",
+  "inspector.wip.key_listener.mouse_type": "鼠标按键",
+  "inspector.wip.key_listener.key": "键盘按键",
+  "inspector.wip.shape": "形状",
+  "inspector.wip.shape.width": "宽度",
+  "inspector.wip.shape.height": "高度",
+  "inspector.wip.shape.name": "名称",
+  "inspector.wip.color": "颜色",
+  "inspector.wip.color.base": "基底",
+  "inspector.wip.color.frame": "边框",
+  "inspector.wip.color.text": "文本",
+  "inspector.wip.color.normal": "默认",
+  "inspector.wip.color.pressed": "按下",
+
+  "inspector.wip.layout": "布局",
+  "inspector.wip.layout.horizontal": "横向",
+  "inspector.wip.layout.vertical": "纵向"
 }

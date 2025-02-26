@@ -287,31 +287,32 @@ public class EditorKeyListenerSection extends AbstractWidget implements Inspecta
 
     @Override
     public void onInspect(InspectorBuilder builder) {
-        builder.title(Component.literal("Key Listener"))
-                .enumBox(Component.literal("Type"), this::getKeyType, this::setKeyType, KeyType.implemented());
+        builder.title(Component.translatable("inspector.wip.key_listener"))
+                .enumBox(Component.translatable("inspector.wip.key_listener.type"), this::getKeyType, this::setKeyType, KeyType.implemented());
 
         switch (this.keyType) {
             case MOUSE:
-                builder.enumBox(Component.literal("Mouse"), this::getMouseType, this::setMouseType, MouseType.values());
+                builder.enumBox(Component.translatable("inspector.wip.key_listener.mouse_type"), this::getMouseType, this::setMouseType, MouseType.values());
                 break;
             case INPUT:
-                builder.keyInputBox(Component.literal("Key"), this::getKey, this::setKey);
+                builder.keyInputBox(Component.translatable("inspector.wip.key_listener.key"), this::getKey, this::setKey);
                 break;
         }
 
-        builder.title(Component.literal("Information"))
-                .intSlider(Component.literal("Width"), this::getWidth, this::setWidth, 20, 80, 2)
-                .intSlider(Component.literal("Height"), this::getHeight, this::setHeight, 20, 80, 2)
-                .title(Component.literal("Display"))
-                .editBox(Component.literal("Name"), this::getName, this::setName)
-                .title(Component.literal("Base Color"))
-                .colorPicker(Component.literal("Normal"), this.baseColor::getNormal, this.baseColor::setNormal)
-                .colorPicker(Component.literal("Pressed"), this.baseColor::getPressed, this.baseColor::setPressed)
-                .title(Component.literal("Frame Color"))
-                .colorPicker(Component.literal("Normal"), this.frameColor::getNormal, this.frameColor::setNormal)
-                .colorPicker(Component.literal("Pressed"), this.frameColor::getPressed, this.frameColor::setPressed)
-                .title(Component.literal("Text Color"))
-                .colorPicker(Component.literal("Normal"), this.textColor::getNormal, this.textColor::setNormal)
-                .colorPicker(Component.literal("Pressed"), this.textColor::getPressed, this.textColor::setPressed);
+        builder.title(Component.translatable("inspector.wip.shape"))
+                .intSlider(Component.translatable("inspector.wip.shape.width"), this::getWidth, this::setWidth, 20, 80, 2)
+                .intSlider(Component.translatable("inspector.wip.shape.height"), this::getHeight, this::setHeight, 20, 80, 2)
+                .editBox(Component.translatable("inspector.wip.shape.name"), this::getName, this::setName)
+                .title(Component.translatable("inspector.wip.color"))
+                .title(Component.translatable("inspector.wip.color.base"))
+                .colorPicker(Component.translatable("inspector.wip.color.normal"), this.baseColor::getNormal, this.baseColor::setNormal)
+                .colorPicker(Component.translatable("inspector.wip.color.pressed"), this.baseColor::getPressed, this.baseColor::setPressed)
+                .title(Component.translatable("inspector.wip.color.frame"))
+                .colorPicker(Component.translatable("inspector.wip.color.normal"), this.frameColor::getNormal, this.frameColor::setNormal)
+                .colorPicker(Component.translatable("inspector.wip.color.pressed"), this.frameColor::getPressed, this.frameColor::setPressed)
+
+                .title(Component.translatable("inspector.wip.color.text"))
+                .colorPicker(Component.translatable("inspector.wip.color.normal"), this.textColor::getNormal, this.textColor::setNormal)
+                .colorPicker(Component.translatable("inspector.wip.color.pressed"), this.textColor::getPressed, this.textColor::setPressed);
     }
 }

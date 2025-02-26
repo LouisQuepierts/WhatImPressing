@@ -4,12 +4,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.quepierts.urbaneui.DisplayableType;
 import net.quepierts.urbaneui.MathHelper;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T> {
+public class InspectorEnumBox<T extends DisplayableType> extends InspectorModifyWidget<T> {
     private final T[] values;
 
     private boolean dropped = false;
@@ -27,7 +28,7 @@ public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T
         int buttonWidth = width / 2;
         int left = width - buttonWidth;
 
-        graphics.drawWordWrap(Minecraft.getInstance().font, this.message, 0, 8, left, 0xffffffff);
+        graphics.drawString(Minecraft.getInstance().font, this.message, 0, 8, 0xffffffff);
         RenderSystem.enableBlend();
 
         int hover = hovered ? mouseY / 20 : -1;
@@ -41,7 +42,7 @@ public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T
         int half = buttonWidth / 2;
         graphics.drawCenteredString(
                 Minecraft.getInstance().font,
-                this.selected.name(),
+                this.selected.getDisplayName(),
                 left + half, 8,
                 0xffffffff
         );
@@ -56,7 +57,7 @@ public class InspectorEnumBox<T extends Enum<?>> extends InspectorModifyWidget<T
 
                 graphics.drawCenteredString(
                         Minecraft.getInstance().font,
-                        this.values[i].name(),
+                        this.values[i].getDisplayName(),
                         left + half, 28 + 20 * i,
                         0xffffffff
                 );
