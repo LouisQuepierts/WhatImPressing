@@ -23,7 +23,7 @@ public class InspectorKeyBox extends InspectorModifyWidget<InputConstants.Key> {
         int buttonWidth = Math.min(width / 2, 100);
         int left = width - buttonWidth;
 
-        graphics.drawWordWrap(Minecraft.getInstance().font, this.message, 0, 8, left, 0xffffffff);
+        graphics.drawString(Minecraft.getInstance().font, this.message, 0, 8, 0xffffffff);
         RenderSystem.enableBlend();
 
         int hover = hovered ? mouseY / 20 : -1;
